@@ -1,0 +1,33 @@
+<!--<div class="panel panel-default">-->
+<!--<div class="panel-heading">{{title}}</div>-->
+  <!--<div class="panel-body">-->
+    <!--<ul class="list-group">-->
+      <!--<li class="list-group-item"-->
+          <!--(click)="openGroup(up.group)">-->
+        <!--<div class="pull-left">{{up.name}}</div>-->
+        <!--<span class="pull-right">{{up.group}}</span>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="panel panel-default">
+<div class="panel-heading">{{title}}</div>
+  <div class="row">
+    <div class="col-xs-12">
+    <a
+      href="#"
+      class="list-group-item clearfix"
+      *ngFor="let up of upcomingArr"
+      (click)="openGroup(up.group)">
+      <div class="pull-left">
+        <h4 class="list-group-item-heading">{{ up.date | date:'HH:MM dd.MM.yy.' }}</h4>
+        <p class="list-group-item-text">{{ up.name }}</p>
+      </div>
+      <span class="pull-right badge">
+      {{up.group}}
+      </span>
+    </a>
+  </div>
+  </div>
+</div>
