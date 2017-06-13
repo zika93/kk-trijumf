@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule, Routes} from '@angular/router';
+
 
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -11,13 +11,13 @@ import { GroupComponent } from './group-list/group/group.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { PlayerComponent } from './player-list/player/player.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
+import { AppRoutingModule } from './app-routing.module';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { DropdownDirective } from './shared/dropdown.directive';
+import { HeadingNavComponent } from './heading/heading-nav/heading-nav.component';
+import { PointerDirective } from './shared/pointer.directive';
 
 
-const appRoutes: Routes = [
-  { path: '', component: UpcomingComponent },
-  { path: 'grupe', component: GroupListComponent },
-  { path: 'igraci', component: PlayerListComponent }
-];
 
 @NgModule({
   declarations: [
@@ -27,13 +27,17 @@ const appRoutes: Routes = [
     GroupComponent,
     PlayerListComponent,
     PlayerComponent,
-    UpcomingComponent
+    UpcomingComponent,
+    ErrorPageComponent,
+    DropdownDirective,
+    HeadingNavComponent,
+    PointerDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
