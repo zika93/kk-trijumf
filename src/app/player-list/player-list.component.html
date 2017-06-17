@@ -1,3 +1,9 @@
-<p>
-  player-list works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let pl of players">{{pl.Name}} {{pl.Surname}}<span class="pull-right badge">
+      {{pl.Id}}
+      </span></li>
+    </ul>
+  </div>
+</div>
