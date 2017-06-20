@@ -1,139 +1,69 @@
-.navbar-custom {
-  background-color: #230177;
-  border-color: #82fbeb;
-}
-.navbar-custom .navbar-brand {
-  color: #ffffff;
-}
-.navbar-custom .navbar-brand:hover,
-.navbar-custom .navbar-brand:focus {
-  color: #230177;
-}
-.navbar-custom .navbar-text {
-  color: #ffffff;
-}
-.navbar-custom .navbar-nav > li > a {
-  color: #ffffff;
-}
-.navbar-custom .navbar-nav > li > a:hover,
-.navbar-custom .navbar-nav > li > a:focus {
-  color: #230177;
-}
-.navbar-custom .navbar-nav > .active > a,
-.navbar-custom .navbar-nav > .active > a:hover,
-.navbar-custom .navbar-nav > .active > a:focus {
-  color: #230177;
-  background-color: #82fbeb;
-}
-.navbar-custom .navbar-nav > .open > a,
-.navbar-custom .navbar-nav > .open > a:hover,
-.navbar-custom .navbar-nav > .open > a:focus {
-  color: #230177;
-  background-color: #82fbeb;
-}
-.navbar-custom .navbar-toggle {
-  border-color: #82fbeb;
-}
-.navbar-custom .navbar-toggle:hover,
-.navbar-custom .navbar-toggle:focus {
-  background-color: #82fbeb;
-}
-.navbar-custom .navbar-toggle .icon-bar {
-  background-color: #ffffff;
-}
-.navbar-custom .navbar-collapse,
-.navbar-custom .navbar-form {
-  border-color: #ffffff;
-}
-.navbar-custom .navbar-link {
-  color: #ffffff;
-}
-.navbar-custom .navbar-link:hover {
-  color: #230177;
-}
-
-@media (max-width: 767px) {
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
-    color: #ffffff;
-  }
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #230177;
-  }
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #230177;
-    background-color: #82fbeb;
-  }
-}
-
 .navbar-default {
-  background-color: #9b59b6;
-  border-color: #8e44ad;
+  background-color: #815aa4;
+  border-color: #421c52;
 }
 .navbar-default .navbar-brand {
-  color: #ecf0f1;
+  color: #fffffe;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #ecdbff;
+  color: #ffcc29;
 }
 .navbar-default .navbar-text {
-  color: #ecf0f1;
+  color: #fffffe;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ecf0f1;
+  color: #fffffe;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #ecdbff;
+  color: #ffcc29;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #ecdbff;
-  background-color: #8e44ad;
+  color: #ffcc29;
+  background-color: #421c52;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  color: #ecdbff;
-  background-color: #8e44ad;
+  color: #ffcc29;
+  background-color: #421c52;
 }
 .navbar-default .navbar-toggle {
-  border-color: #8e44ad;
+  border-color: #421c52;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #8e44ad;
+  background-color: #421c52;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #ecf0f1;
+  background-color: #fffffe;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #ecf0f1;
+  border-color: #fffffe;
 }
 .navbar-default .navbar-link {
-  color: #ecf0f1;
+  color: #fffffe;
 }
 .navbar-default .navbar-link:hover {
-  color: #ecdbff;
+  color: #ffcc29;
 }
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ecf0f1;
+    color: #fffffe;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #ecdbff;
+    color: #ffcc29;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #ecdbff;
-    background-color: #8e44ad;
+    color: #ffcc29;
+    background-color: #421c52;
   }
 }

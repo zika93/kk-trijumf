@@ -20,7 +20,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { BaseComponent } from './base/base.component';
 import { AuthService } from './auth/auth.service';
 import {AuthGuard} from './auth/auth-guard.service';
-import {PlayerService} from "./player-list/player.service";
+import {PlayerService} from './player-list/player.service';
 
 
 

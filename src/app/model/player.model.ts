@@ -9,7 +9,7 @@ export class Player {
     private Name: string,
     private MiddleName: string,
     private Surname: string,
-    private Birtyhday: Date,
+    private Birthday: Date,
     private Height: number,
     private Weight: number,
     private SportsmanId: number) {

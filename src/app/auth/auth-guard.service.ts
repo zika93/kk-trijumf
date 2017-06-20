@@ -4,7 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate/*, CanActivateChild*/ {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -17,14 +17,14 @@ export class AuthGuard implements CanActivate/*, CanActivateChild*/ {
     }
   }
 
- /* canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
     if ( this.auth.isLoggedin() === true) {
       return true;
     } else {
       this.router.navigate(['/login']);
       return false;
     }
-  }*/
+  }
 
 
 }
