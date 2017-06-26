@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {Player} from '../../model/player.model';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../player.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {PlayerService} from '../player.service';
 })
 export class PlayerComponent implements OnInit {
 
-  player: Player = new Player([], [], [], [], 1, 'Filip', 'Zarko', 'Ristic', new Date(1993, 5, 11), 175, 80, 20);
+  player: Player = new Player([], [], [], [], null, '', '', '', null, null, null, null);
   id: number;
   imgUrl = '../../../assets/img/user.svg';
 
@@ -32,7 +32,7 @@ export class PlayerComponent implements OnInit {
   }
 
 
-  constructor(private route: ActivatedRoute, private service: PlayerService) {
+  constructor(private route: ActivatedRoute, private service: PlayerService, private router: Router) {
   }
 
   ngOnInit() {
@@ -42,9 +42,27 @@ export class PlayerComponent implements OnInit {
         this.service.getPlayer(this.id).subscribe(
           (player: Player) => {
             console.log(player);
+            player.Birthday = new Date(player.Birthday);
             this.player = player;
           }
         );
+      }
+    );
+  }
+
+  onEdit() {
+    this.router.navigate(['edit'], { relativeTo: this.route});
+  }
+
+  addFee() {
+    console.log('add feeee');
+  }
+
+  refreshFee() {
+    console.log('refresh feeee');
+    this.service.fetchPlayerFees(this.id).subscribe(
+      (param: Params) => {
+        this.player.Fee = param;
       }
     );
   }

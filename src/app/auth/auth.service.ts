@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
 export class AuthService {
@@ -7,15 +8,17 @@ export class AuthService {
 
   constructor() { }
 
-  onLogin() {
+  onLogin(user: string) {
     this.isLoggedIn = true;
+    Cookie.set('user', user, 1);
   }
 
   onLogout() {
     this.isLoggedIn = false;
+    Cookie.delete('user');
   }
 
  isLoggedin() {
-    return this.isLoggedIn;
+    return Cookie.get('user') !=  null;
  }
 }

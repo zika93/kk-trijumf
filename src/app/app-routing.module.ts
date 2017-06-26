@@ -8,6 +8,8 @@ import {LoginComponent} from './auth/login/login.component';
 import {BaseComponent} from './base/base.component';
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {PlayerComponent} from './player-list/player/player.component';
+import {AuthGuard} from './auth/auth-guard.service';
+import {PlayerEditComponent} from './player-list/player/edit-player/edit-player.component';
 
 
 const appRoutes: Routes = [
@@ -16,11 +18,13 @@ const appRoutes: Routes = [
       { path: '', component: UpcomingComponent, pathMatch: 'full' },
       { path: 'groups', component: GroupListComponent },
       { path: 'players', component: PlayerListComponent },
+      { path: 'players/new', component: PlayerEditComponent },
+      { path: 'players/:id/edit', component: PlayerEditComponent },
       { path: 'players/:id', component: PlayerComponent },
       { path: 'error', component: ErrorPageComponent },
 
   ],
-    /*canActivate: [AuthGuard],*/
+    canActivate: [AuthGuard],
     component: BaseComponent},
   { path: 'login', component: LoginComponent },
   { path: 'error-page', component: ErrorPageComponent },

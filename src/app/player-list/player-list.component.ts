@@ -20,7 +20,7 @@ export class PlayerListComponent implements OnInit, OnDestroy {
       (players: Player[]) => {
         console.log(players);
         this.players = players;
-        this.service.setPlayers(players);
+        // this.service.setPlayers(players);
       }
     );
   }

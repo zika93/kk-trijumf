@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 
@@ -21,6 +21,11 @@ import { BaseComponent } from './base/base.component';
 import { AuthService } from './auth/auth.service';
 import {AuthGuard} from './auth/auth-guard.service';
 import {PlayerService} from './player-list/player.service';
+import { PlayerEditComponent } from './player-list/player/edit-player/edit-player.component';
+import { DateValueAccessorDirective } from './shared/date-value-accessor.directive';
+import {DatePipe} from '@angular/common';
+import { HoverDirective } from './shared/hover.directive';
+import { AppDatePipe } from './shared/app-date.pipe';
 
 
 
@@ -38,15 +43,20 @@ import {PlayerService} from './player-list/player.service';
     HeadingNavComponent,
     PointerDirective,
     LoginComponent,
-    BaseComponent
+    BaseComponent,
+    PlayerEditComponent,
+    DateValueAccessorDirective,
+    HoverDirective,
+    AppDatePipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, PlayerService],
+  providers: [AuthService, AuthGuard, PlayerService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

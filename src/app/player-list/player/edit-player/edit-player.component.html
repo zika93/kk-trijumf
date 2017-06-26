@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <form [formGroup]="editForm" (submit)="onSubmit()">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Edit basic info:
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="row">
+              <div class="col-xs-12 col-sm-4">
+                <div class="row">
+                  <img style="max-Height: 150px;max-width: 150px;">
+                </div>
+                <br>
+                <div class="row">
+                  <button class="btn btn-success" type="submit">Save</button>
+                  <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+                  <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-refresh"></span> Refresh
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-8">
+                <label for="Name">Name:</label>
+                <input type="text" class="form-control" id="Name" formControlName="Name">
+                <label for="MiddleName">Middle name:</label>
+                <input type="text" class="form-control" id="MiddleName" formControlName="MiddleName">
+                <label for="Surname">Surname:</label>
+                <input type="text" class="form-control" id="Surname" formControlName="Surname">
+                <label for="Birthday">Birthday:</label>
+                <input type="text" class="form-control" id="Birthday"  formControlName="Birthday">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Additional info:
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="row">
+              <div class="col-xs-12 col-sm-10 col-md-6">
+
+                <label for="Height">Height:</label>
+                <input type="number" class="form-control" id="Height"  formControlName="Height">
+                <label for="Weight">Weight:</label>
+                <input type="number" class="form-control" id="Weight"  formControlName="Weight">
+              </div>
+              <div class="col-xs-12 col-sm-10 col-md-6">
+                <label for="SportsmanId">Sportsman Id:</label>
+                <input type="text" class="form-control" id="SportsmanId" formControlName="SportsmanId">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Groups:
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-success btn-xs" type="button">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button class="btn btn-default btn-xs" type="button">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
+        </div>
+        <div class="panel-body collapse">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="list-group" formArrayName="GroupPlayers">
+              <div class="list-group-item" *ngFor="let groupControl of editForm.get('GroupPlayers');let i = index">
+                <input type="text" class="form-control" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Fees:
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-success btn-xs "  type="button">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button class="btn btn-default btn-xs " type="button">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
+        </div>
+        <div class="panel-body collapse">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="list-group" formArrayName="Fee">
+              <div class="list-group-item" *ngFor="let feeControl of editForm.get('Fee');let i = index">
+                <input type="text" class="form-control" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Activity:
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-default btn-xs " type="button">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
+        </div>
+        <div class="panel-body collapse">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="list-group" formArrayName="PlayerActivity">
+              <div class="list-group-item" *ngFor="let PlayerActivityControl of editForm.get('PlayerActivity');let i = index">
+                <input type="text" class="form-control" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log('Login');
-   // const email = this.form.value.email;
+    const email = this.form.value.email;
    // const password = this.form.value.password;
-    this.auth.onLogin();
+    this.auth.onLogin(email);
     this.router.navigate(['']);
   }
 

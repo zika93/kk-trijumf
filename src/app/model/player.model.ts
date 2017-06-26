@@ -1,17 +1,18 @@
 export class Player {
 
   constructor(
-    private Fee: any,
-    private GroupPlayers: any,
-    private Picture: any,
-    private PlayerActivity: any,
-    private Id: number,
-    private Name: string,
-    private MiddleName: string,
-    private Surname: string,
-    private Birthday: Date,
-    private Height: number,
-    private Weight: number,
-    private SportsmanId: number) {
+    public Fee: any,
+    public GroupPlayers: any,
+    public Picture: any,
+    public PlayerActivity: any,
+    public Id: number,
+    public Name: string,
+    public MiddleName: string,
+    public Surname: string,
+    public Birthday: Date,
+    public Height: number,
+    public Weight: number,
+    public SportsmanId: number) {
   }
+
 }

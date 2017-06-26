@@ -1,7 +1,15 @@
 <div class="row">
   <div class="col-xs-12">
+    <button class="btn btn-primary" type="button"  routerLink="new">
+      Add New Player
+    </button>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-xs-12">
     <ul class="list-group">
-      <li appCursorPointer [routerLink]="[pl.Id]" class="list-group-item" *ngFor="let pl of players">
+      <li appCursorPointer [routerLink]="[pl.Id]" class="list-group-item" appHover="list-group-item-info" *ngFor="let pl of players">
         {{pl.Name}} {{pl.Surname}}<span class="pull-right badge">
       {{pl.Id}}
       </span></li>
