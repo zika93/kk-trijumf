@@ -1,19 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {Player} from '../../model/player.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../player.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Values} from '../../shared/static/values';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
-  player: Player = new Player([], [], [], [], null, '', '', '', null, null, null, null);
+  sub: Subscription;
+
+  player: Player = new Player(
+    [], [], [], null, '', '', '', null, null, null, null, null, '', '', '', '');
+  // new Player([], [], [], [], null, '', '', '', null, null, null, null);
   id: number;
-  imgUrl = '../../../assets/img/user.svg';
+  imgUrl = Values.userImage;
 
   isCollapsedGroups = false;
   isCollapsedFees = false;
@@ -32,26 +38,34 @@ export class PlayerComponent implements OnInit {
   }
 
 
-  constructor(private route: ActivatedRoute, private service: PlayerService, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private service: PlayerService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.service.getPlayer(this.id).subscribe(
+        this.sub = this.service.getPlayer(this.id).subscribe(
           (player: Player) => {
             console.log(player);
             player.Birthday = new Date(player.Birthday);
             this.player = player;
+            if (this.player.Picture !== null)
+              this.imgUrl = this.player.Picture;
           }
         );
       }
     );
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   onEdit() {
-    this.router.navigate(['edit'], { relativeTo: this.route});
+    this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   addFee() {
@@ -62,7 +76,7 @@ export class PlayerComponent implements OnInit {
     console.log('refresh feeee');
     this.service.fetchPlayerFees(this.id).subscribe(
       (param: Params) => {
-        this.player.Fee = param;
+        this.player.Fees = param;
       }
     );
   }

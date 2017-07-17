@@ -1,4 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+///<reference path="../../../model/player.model.ts"/>
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../../player.service';
@@ -6,6 +7,7 @@ import {Player} from '../../../model/player.model';
 import {Subscription} from 'rxjs/Subscription';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../shared/date-helper';
+import {Values} from '../../../shared/static/values';
 
 @Component({
   selector: 'app-edit-player',
@@ -17,84 +19,42 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   sub: Subscription;
   editForm: FormGroup;
   editMode = false;
+  pic = '../../../assets/img/user.svg';
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: PlayerService, private datepipe: DatePipe) {
+  // imgUrl = Values.userImage;
+  // @ViewChild('imgCanvas') canvasRef: ElementRef;
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private service: PlayerService,
+              private datepipe: DatePipe) {
   }
 
   private initForm() {
-    let name = '';
-    let lastname = '';
-    let middlename = '';
-    let birthday: Date;
-    let height = 0;
-    let weight = 0;
-    let sid = '';
-    let fee = [];
-    let gp = [];
-    let pic = [];
-    let pa = [];
-
+    console.log('initForm:');
     this.editForm = new FormGroup({
-      'Name': new FormControl(name),
-      'MiddleName': new FormControl(middlename),
-      'Surname': new FormControl(lastname),
-      'Birthday': new FormControl(birthday),
-      'SportsmanId': new FormControl(sid),
-      'Weight': new FormControl(weight),
-      'Height': new FormControl(height),
-      'Fee': new FormArray(fee),
-      'GroupPlayers': new FormArray(gp),
-      'Picture': new FormArray(pic),
-      'PlayerActivity': new FormArray(pa)
+      'Name': new FormControl(''),
+      'MiddleName': new FormControl(''),
+      'Surname': new FormControl(''),
+      'Birthday': new FormControl(null),
+      'Medical': new FormControl(null),
+      'SportsmanId': new FormControl(''),
+      'PhoneNumber1': new FormControl(''),
+      'PhoneNumber2': new FormControl(''),
+      'Weight': new FormControl(0),
+      'Height': new FormControl(0),
+      'Fees': new FormArray([]),
+      'GroupPlayers': new FormArray([]),
+      'Picture': new FormControl(''),
+      'PlayerActivities': new FormArray([])
     });
-
-    if (this.editMode) {
-      this.sub = this.service.getPlayer(this.id).subscribe(
-        (player: Player) => {
-          const data: any = player;
-          delete data.Id;
-          // const dat =  new Date(data.Birthday.valueOf())
-          // dat.setDate(dat.getDate() + 1);
-          // data.Birthday = dat;
-          data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
-          // name = player.Name;
-          // lastname = player.Surname;
-          // middlename = player.MiddleName;
-          // console.log(player.Birthday);
-          // birthday = new Date(player.Birthday);
-          // console.log(birthday);
-          // height = player.Height;
-          // weight = player.Weight;
-          // sid = player.SportsmanId.toString();
-          // fee = player.Fee;
-          // pic = player.Picture;
-          // gp = player.GroupPlayers;
-          // pa = player.PlayerActivity;
-
-          this.editForm.setValue(data);
-          // this.editForm = new FormGroup({
-          //   'Name': new FormControl(name),
-          //   'Middlename': new FormControl(middlename),
-          //   'Surname': new FormControl(lastname),
-          //   'Birthday': new FormControl(birthday),
-          //   'SportsmanId': new FormControl(sid),
-          //   'Weight': new FormControl(weight),
-          //   'Height': new FormControl(height),
-          //   'Fee': new FormArray(fee),
-          //   'GroupPlayers': new FormArray(gp),
-          //   'Picture': new FormArray(pic),
-          //   'PlayerActivity': new FormArray(pa)
-          // });
-
-        }
-      );
-    }
   }
 
   onSubmit() {
     console.log(this.editForm);
     const data = this.editForm.value;
     data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
+    data.Medical = new Date(DateHelper.parseStringToDate(data.Medical));
     console.log(data);
     if (this.editMode) {
       data.Id = this.id;
@@ -116,19 +76,57 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
     this.router.navigate(['..'], {relativeTo: this.route});
   }
 
+  onRefresh() {
+    this.sub = this.service.getPlayer(this.id).subscribe(
+      (player: Player) => {
+        console.log('onRefresh:');
+        console.log(player);
+        const copy = Object.assign({}, player);
+        const data: any = copy;
+        const id = data.Id;
+        delete data.Id;
+        delete data.Thumbnail;
+        data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
+        data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
+        this.editForm.setValue(data);
+        data.Id = id;
+      }
+    );
+  }
+
   ngOnInit() {
+    console.log('ngOnInit:');
+    this.initForm();
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
         this.editMode = param['id'] != null;
-        this.initForm();
+        if (this.editMode) {
+          this.onRefresh();
+        }
       }
     );
 
   }
 
   ngOnDestroy(): void {
-    if (this.sub != null)
+    if (this.sub != null) {
       this.sub.unsubscribe();
+    }
+  }
+
+  changeImage(e) {
+    const reader = e.target;
+    this.pic = reader.result.toString();
+    this.editForm.controls['Picture'].setValue(this.pic);
+  }
+
+  encodeImageFileAsURL(e) {
+
+    console.warn('encodeImageFileAsURL:');
+    const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = this.changeImage.bind(this);
+    reader.readAsDataURL(file);
   }
 }

@@ -4,12 +4,12 @@ import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
 import {Player} from '../model/player.model';
 import {Observer} from 'rxjs/Observer';
+import {Values} from 'app/shared/static/values';
 @Injectable()
 export class PlayerService {
 
   players: Player[];
 
-  url = 'http://localhost:51194';
 
   constructor(private http: Http) {
   }
@@ -28,7 +28,8 @@ export class PlayerService {
   }
 
   fetchAllPlayers() {
-    return this.http.get(this.url + '/players/getall').map(
+    console.log('fetching!');
+    return this.http.get(Values.url + '/players/getall').map(
       (response: Response) => {
         this.players = response.json();
         return response.json();
@@ -57,7 +58,7 @@ export class PlayerService {
   }
 
   fetchPlayer(id: number) {
-    return this.http.get(this.url + '/players/get/' + id).map(
+    return this.http.get(Values.url + '/players/get/' + id).map(
       (response: Response) => {
         return response.json();
       }
@@ -65,7 +66,7 @@ export class PlayerService {
   }
 
   fetchPlayerFees(id: number) {
-    return this.http.get(this.url + '/players/getfees/' + id).map(
+    return this.http.get(Values.url + '/players/getfees/' + id).map(
       (response: Response) => {
         return response.json();
       }
@@ -73,17 +74,17 @@ export class PlayerService {
   }
 
   createPlayer(player: Player) {
-    return this.http.post(this.url + '/players/create', player).map( this.extractData )
+    return this.http.post(Values.url + '/players/create', player).map( this.extractData )
       .catch( this.handleErrorObservable );
   }
 
   updatePlayer(player: Player) {
-    return this.http.post(this.url + '/players/update', player).map( this.extractData )
+    return this.http.post(Values.url + '/players/update', player).map( this.extractData )
       .catch( this.handleErrorObservable );
   }
 
   fetchPlayerGroups(id: number) {
-    return this.http.get(this.url + '/players/getgroups/' + id).map( this.extractData )
+    return this.http.get(Values.url + '/players/getgroups/' + id).map( this.extractData )
       .catch( this.handleErrorObservable );
   }
 

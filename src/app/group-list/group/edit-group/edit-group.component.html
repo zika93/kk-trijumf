@@ -2,7 +2,7 @@
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{group.Name}}'s Group:
+        {{group.Name}}'s basic info:
       </div>
       <div class="panel-body">
         <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
@@ -19,14 +19,24 @@
             <div class="col-xs-12 col-sm-8">
               <label for="name">Name:</label>
               <h4 id="name"> {{group.Name}}</h4>
-              <label for="location">Name:</label>
-              <h4 id="location"> {{group.Location}}</h4>
             </div>
           </div>
 
         </div>
       </div>
     </div>
+
+
+
+    <div *ngIf="addPlayers;else other_content">
+      content here ...
+    </div>
+
+    <ng-template #other_content>other content here...</ng-template>
+
+
+
+
   </div>
 </div>
 

@@ -10,6 +10,7 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import {PlayerComponent} from './player-list/player/player.component';
 import {AuthGuard} from './auth/auth-guard.service';
 import {PlayerEditComponent} from './player-list/player/edit-player/edit-player.component';
+import {GroupComponent} from './group-list/group/group.component';
 
 
 const appRoutes: Routes = [
@@ -17,6 +18,9 @@ const appRoutes: Routes = [
     children: [
       { path: '', component: UpcomingComponent, pathMatch: 'full' },
       { path: 'groups', component: GroupListComponent },
+      { path: 'groups/new', component: GroupComponent },
+      { path: 'groups/:id/edit', component: GroupComponent },
+      { path: 'groups/:id', component: GroupComponent },
       { path: 'players', component: PlayerListComponent },
       { path: 'players/new', component: PlayerEditComponent },
       { path: 'players/:id/edit', component: PlayerEditComponent },

@@ -26,6 +26,9 @@ import { DateValueAccessorDirective } from './shared/date-value-accessor.directi
 import {DatePipe} from '@angular/common';
 import { HoverDirective } from './shared/hover.directive';
 import { AppDatePipe } from './shared/app-date.pipe';
+import {GroupService} from './group-list/group.service';
+import { EditGroupComponent } from './group-list/group/edit-group/edit-group.component';
+// import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 
 
@@ -47,7 +50,9 @@ import { AppDatePipe } from './shared/app-date.pipe';
     PlayerEditComponent,
     DateValueAccessorDirective,
     HoverDirective,
-    AppDatePipe
+    AppDatePipe,
+    EditGroupComponent
+    // FileUploaderComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,7 @@ import { AppDatePipe } from './shared/app-date.pipe';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, PlayerService, DatePipe],
+  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
