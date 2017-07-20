@@ -35,9 +35,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   private initForm() {
     console.log('initForm:');
     this.editForm = new FormGroup({
-      'Name': new FormControl('', Validators.required),
-      'MiddleName': new FormControl('', Validators.required),
-      'Surname': new FormControl('', Validators.required),
+      'Name': new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      'MiddleName': new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      'Surname': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'Birthday': new FormControl(null),
       'Medical': new FormControl(null),
       'SportsmanId': new FormControl(''),
