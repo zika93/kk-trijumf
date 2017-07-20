@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {GroupService} from '../../group.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Group} from 'app/model/group.model';
+import {Activity} from '../../../model/activity.model';
 
 @Component({
   selector: 'app-edit-group',
@@ -80,6 +81,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   onAddActivity() {
     const control = new FormControl(null, Validators.required);
-    (<FormArray>this.editForm.get('Activity')).push(control);
+    (<FormArray>this.editForm.get('Activities')).push(control);
   }
 }
