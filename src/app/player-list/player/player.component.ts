@@ -5,6 +5,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../player.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Values} from '../../shared/static/values';
+import {Fee} from '../../model/fee.model';
+import {Group} from '../../model/group.model';
 
 @Component({
   selector: 'app-player',
@@ -61,11 +63,25 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    if (this.sub != null) {
+      this.sub.unsubscribe();
+    }
   }
 
   onEdit() {
     this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  onRefresh() {
+    this.sub = this.service.fetchPlayer(this.id).subscribe(
+      (player: Player) => {
+        console.log(player);
+        player.Birthday = new Date(player.Birthday);
+        this.player = player;
+        if (this.player.Picture !== null)
+          this.imgUrl = this.player.Picture;
+      }
+    );
   }
 
   addFee() {
@@ -76,7 +92,17 @@ export class PlayerComponent implements OnInit, OnDestroy {
     console.log('refresh feeee');
     this.service.fetchPlayerFees(this.id).subscribe(
       (param: Params) => {
-        this.player.Fees = param;
+        this.player.Fees = <Fee[]>param;
+      }
+    );
+  }
+
+  refreshGroups() {
+   // players/getgroups/{playerId}
+    this.service.fetchPlayerGroups(this.id).subscribe(
+      (param: Params) => {
+        console.log(param);
+        this.player.Groups = <Group[]>param;
       }
     );
   }

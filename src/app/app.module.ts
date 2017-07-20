@@ -28,6 +28,7 @@ import { HoverDirective } from './shared/hover.directive';
 import { AppDatePipe } from './shared/app-date.pipe';
 import {GroupService} from './group-list/group.service';
 import { EditGroupComponent } from './group-list/group/edit-group/edit-group.component';
+import {CoachService} from './coach/coach.service';
 // import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 
 
@@ -61,7 +62,7 @@ import { EditGroupComponent } from './group-list/group/edit-group/edit-group.com
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService],
+  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService, CoachService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

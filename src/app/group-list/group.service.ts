@@ -5,6 +5,8 @@ import {Observer} from 'rxjs/Observer';
 import {Values} from '../shared/static/values';
 import 'rxjs/Rx';
 import {Group} from '../model/group.model';
+import {isNullOrUndefined} from 'util';
+import {HttpHelper} from '../shared/http-helper';
 
 @Injectable()
 export class GroupService {
@@ -14,7 +16,7 @@ export class GroupService {
   }
 
   getAll() {
-    if (this.groups == null || this.groups.length === 0) {
+    if (isNullOrUndefined(this.groups) || this.groups.length === 0) {
       console.log('returning fetched!');
       return this.fetchAllGroups();
     } else {
@@ -31,7 +33,7 @@ export class GroupService {
         console.log(response);
         return response.json();
       }
-    ).catch(this.handleErrorObservable);
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
   fetchAllGroups() {
@@ -41,7 +43,7 @@ export class GroupService {
         this.groups = response.json();
         return response.json();
       }
-    ).catch(this.handleErrorObservable);
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
   getGroup(id: number) {
@@ -65,17 +67,7 @@ export class GroupService {
       (response: Response) => {
         return response.json();
       }
-    ).catch(this.handleErrorObservable);
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
-  private extractData(res: Response) {
-    const body = res.json();
-    return body.data || {};
-  }
-
-  private handleErrorObservable(error: Response | any) {
-    console.error(error.message || error);
-    console.log('Something went wrong!');
-    return Observable.throw(error.message || error);
-  }
 }

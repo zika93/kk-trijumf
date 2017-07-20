@@ -13,7 +13,7 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  group: Group = new Group([], [], [], null, '', '');
+  group: Group = new Group([], /*[], [],*/ null, '', '');
   id: number;
 
 

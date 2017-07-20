@@ -1,6 +1,6 @@
 ///<reference path="../../../model/player.model.ts"/>
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../../player.service';
 import {Player} from '../../../model/player.model';
@@ -8,6 +8,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../shared/date-helper';
 import {Values} from '../../../shared/static/values';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-edit-player',
@@ -33,9 +34,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   private initForm() {
     console.log('initForm:');
     this.editForm = new FormGroup({
-      'Name': new FormControl(''),
-      'MiddleName': new FormControl(''),
-      'Surname': new FormControl(''),
+      'Name': new FormControl('', Validators.required),
+      'MiddleName': new FormControl('', Validators.required),
+      'Surname': new FormControl('', Validators.required),
       'Birthday': new FormControl(null),
       'Medical': new FormControl(null),
       'SportsmanId': new FormControl(''),
@@ -44,9 +45,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       'Weight': new FormControl(0),
       'Height': new FormControl(0),
       'Fees': new FormArray([]),
-      'GroupPlayers': new FormArray([]),
+      'Groups': new FormArray([]),
       'Picture': new FormControl(''),
-      'PlayerActivities': new FormArray([])
+      'Activities': new FormArray([])
     });
   }
 
@@ -86,6 +87,8 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         const id = data.Id;
         delete data.Id;
         delete data.Thumbnail;
+        if (!isNullOrUndefined(data.Picture))
+          this.pic = data.Picture;
         data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
         data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
         this.editForm.setValue(data);

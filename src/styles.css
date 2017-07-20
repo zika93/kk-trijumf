@@ -9,3 +9,7 @@ body{
   background-attachment: fixed;
   background-position: center;
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

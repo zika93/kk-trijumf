@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {Player} from '../model/player.model';
 import {Observer} from 'rxjs/Observer';
 import {Values} from 'app/shared/static/values';
+import {isNullOrUndefined} from 'util';
+import {HttpHelper} from '../shared/http-helper';
+
 @Injectable()
 export class PlayerService {
 
@@ -31,10 +34,11 @@ export class PlayerService {
     console.log('fetching!');
     return this.http.get(Values.url + '/players/getall').map(
       (response: Response) => {
+        console.log(response.json());
         this.players = response.json();
         return response.json();
       }
-    ).catch( this.handleErrorObservable );
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
   setPlayers(players: Player[]) {
@@ -42,7 +46,7 @@ export class PlayerService {
   }
 
   getPlayer(id: number) {
-    if (this.players == null) {
+    if (isNullOrUndefined(this.players) || this.players.length == 0) {
       return this.fetchPlayer(id);
     }
     const pl = this.players.filter(x =>
@@ -60,9 +64,13 @@ export class PlayerService {
   fetchPlayer(id: number) {
     return this.http.get(Values.url + '/players/get/' + id).map(
       (response: Response) => {
+        const player: Player = response.json();
+        console.log( response.json());
+        console.log(player);
+        this.changePlayer(player);
         return response.json();
       }
-    ).catch( this.handleErrorObservable );
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
   fetchPlayerFees(id: number) {
@@ -70,34 +78,36 @@ export class PlayerService {
       (response: Response) => {
         return response.json();
       }
-    ).catch( this.handleErrorObservable );
+    ).catch(HttpHelper.handleErrorObservable);
   }
 
   createPlayer(player: Player) {
-    return this.http.post(Values.url + '/players/create', player).map( this.extractData )
-      .catch( this.handleErrorObservable );
+    return this.http.post(Values.url + '/players/create', player).map(HttpHelper.extractData)
+      .catch(HttpHelper.handleErrorObservable);
   }
 
   updatePlayer(player: Player) {
-    return this.http.post(Values.url + '/players/update', player).map( this.extractData )
-      .catch( this.handleErrorObservable );
+    return this.http.post(Values.url + '/players/update', player).map(
+      (res: Response) => {
+        this.changePlayer(player);
+      })
+      .catch(HttpHelper.handleErrorObservable);
   }
 
   fetchPlayerGroups(id: number) {
-    return this.http.get(Values.url + '/players/getgroups/' + id).map( this.extractData )
-      .catch( this.handleErrorObservable );
+    return this.http.get(Values.url + '/players/getgroups/' + id).map(HttpHelper.extractData)
+      .catch(HttpHelper.handleErrorObservable);
   }
 
-  private extractData(res: Response) {
-    const body = res.json();
-    return body.data || {};
-  }
 
-  private handleErrorObservable (error: Response | any) {
-    console.error(error.message || error);
-    console.log('Something went wrong!');
-    return Observable.throw(error.message || error);
+  changePlayer(player: Player) {
+    if (isNullOrUndefined(this.players))
+     this.players = [];
+    const objIndex = this.players.findIndex((obj => obj.Id === player.Id));
+    if(objIndex !== -1)
+      this.players[objIndex] = player;
+    else
+      this.players.push(player);
   }
-
 
 }

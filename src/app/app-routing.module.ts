@@ -11,6 +11,7 @@ import {PlayerComponent} from './player-list/player/player.component';
 import {AuthGuard} from './auth/auth-guard.service';
 import {PlayerEditComponent} from './player-list/player/edit-player/edit-player.component';
 import {GroupComponent} from './group-list/group/group.component';
+import {EditGroupComponent} from './group-list/group/edit-group/edit-group.component';
 
 
 const appRoutes: Routes = [
@@ -18,8 +19,8 @@ const appRoutes: Routes = [
     children: [
       { path: '', component: UpcomingComponent, pathMatch: 'full' },
       { path: 'groups', component: GroupListComponent },
-      { path: 'groups/new', component: GroupComponent },
-      { path: 'groups/:id/edit', component: GroupComponent },
+      { path: 'groups/new', component: EditGroupComponent },
+      { path: 'groups/:id/edit', component: EditGroupComponent },
       { path: 'groups/:id', component: GroupComponent },
       { path: 'players', component: PlayerListComponent },
       { path: 'players/new', component: PlayerEditComponent },
