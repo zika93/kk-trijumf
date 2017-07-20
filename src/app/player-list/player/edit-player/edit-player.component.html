@@ -11,18 +11,23 @@
               <div class="col-xs-12 col-sm-4">
                 <div class="row">
                   <img src={{pic}} style="max-Height: 150px;max-width: 150px;">
-                  <input type="text" *ngIf="false" class="form-control" formControlName="Picture" >
+                  <input type="text" *ngIf="false" class="form-control" formControlName="Picture">
                   <!--<canvas #imgCanvas width="150px" height="150px">-->
                   <!--</canvas>-->
                   <!--<app-file-uploader [imageSrc]="pic" [activeColor]="'orangered'" [baseColor]="'lightgray'" style="max-Height: 150px;max-width: 150px;"></app-file-uploader>-->
                 </div>
                 <div class="row">
-                    <label class="input-group-btn">
-                    <button class="btn btn-primary">
-                        Browse <input type="file" (change)="encodeImageFileAsURL($event)" style="display: none;" accept="image/*">
-                    </button>
-                    </label>
-                    <!--<button class="btn btn-success" type="button" (click)="encodeImageFileAsURL(image)">Load</button>-->
+                    <!--<input type="file"  class="btn btn-primary" (change)="encodeImageFileAsURL($event)"  accept="image/*">-->
+                    <input #fileInput type="file" (change)="encodeImageFileAsURL($event)" style="display: none;"
+                           accept="image/*"/>
+                    <button class="btn btn-primary" type="button" (click)="triggerFile()">Browse</button>
+                    <!--<button class="btn btn-primary">-->
+                    <!--Browse <input type="file" (change)="encodeImageFileAsURL($event)" style="display: none;" accept="image/*">-->
+                    <!--</button>-->
+                  <!--<label class="input-group-btn">-->
+
+                  <!--</label>-->
+                  <!--<button class="btn btn-success" type="button" (click)="encodeImageFileAsURL(image)">Load</button>-->
                 </div>
                 <br>
                 <div class="row">
@@ -41,14 +46,15 @@
                   Please enter a valid name!</span>
                 <label for="MiddleName">Middle name:</label>
                 <input type="text" class="form-control" id="MiddleName" formControlName="MiddleName">
-                <span *ngIf="!editForm.get('MiddleName').valid && editForm.get('MiddleName').touched" class="help-block">
+                <span *ngIf="!editForm.get('MiddleName').valid && editForm.get('MiddleName').touched"
+                      class="help-block">
                   Please enter a valid middle name!</span>
                 <label for="Surname">Surname:</label>
                 <input type="text" class="form-control" id="Surname" formControlName="Surname">
                 <span *ngIf="!editForm.get('Surname').valid && editForm.get('Surname').touched" class="help-block">
                   Please enter a valid surname!</span>
                 <label for="Birthday">Birthday:</label>
-                <input type="text" class="form-control" id="Birthday"  formControlName="Birthday">
+                <input type="text" class="form-control" id="Birthday" formControlName="Birthday">
               </div>
             </div>
 
@@ -69,9 +75,9 @@
               <div class="col-xs-12 col-sm-10 col-md-6">
 
                 <label for="Height">Height:</label>
-                <input type="number" class="form-control" id="Height"  formControlName="Height">
+                <input type="number" class="form-control" id="Height" formControlName="Height">
                 <label for="Weight">Weight:</label>
-                <input type="number" class="form-control" id="Weight"  formControlName="Weight">
+                <input type="number" class="form-control" id="Weight" formControlName="Weight">
                 <label for="Medical">Medical:</label>
                 <input type="text" class="form-control" id="Medical" formControlName="Medical">
               </div>
@@ -119,7 +125,7 @@
         <div class="panel-heading">
           Fees:
           <div class="btn-toolbar pull-right">
-            <button class="btn btn-success btn-xs "  type="button">
+            <button class="btn btn-success btn-xs " type="button">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
             <button class="btn btn-default btn-xs " type="button">
@@ -152,7 +158,8 @@
         <div class="panel-body collapse">
           <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
             <div class="list-group" formArrayName="Activities">
-              <div class="list-group-item" *ngFor="let PlayerActivityControl of editForm.get('Activities').controls;let i = index">
+              <div class="list-group-item"
+                   *ngFor="let PlayerActivityControl of editForm.get('Activities').controls;let i = index">
                 <input type="text" class="form-control" [formControlName]="i">
               </div>
             </div>

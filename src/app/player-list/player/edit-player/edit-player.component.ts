@@ -1,5 +1,5 @@
 ///<reference path="../../../model/player.model.ts"/>
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {PlayerService} from '../../player.service';
@@ -21,6 +21,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   editForm: FormGroup;
   editMode = false;
   pic = '../../../assets/img/user.svg';
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   // imgUrl = Values.userImage;
   // @ViewChild('imgCanvas') canvasRef: ElementRef;
@@ -91,7 +92,8 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
           this.pic = data.Picture;
         data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
         data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
-        this.editForm.setValue(data);
+        console.warn(data);
+        this.editForm.patchValue(data);
         data.Id = id;
       }
     );
@@ -131,5 +133,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
     const reader = new FileReader();
     reader.onloadend = this.changeImage.bind(this);
     reader.readAsDataURL(file);
+  }
+
+  triggerFile() {
+    this.fileInput.nativeElement.click();
   }
 }
