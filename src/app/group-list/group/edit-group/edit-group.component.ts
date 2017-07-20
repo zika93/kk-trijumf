@@ -26,9 +26,9 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   private initForm() {
     console.log('initForm:');
     this.editForm = new FormGroup({
-      'Activity': new FormArray([], Validators.required),
-      'Coaching': new FormArray([], Validators.required),
-      'GroupPlayers': new FormArray([], Validators.required),
+      'Activities': new FormArray([], Validators.required),
+      // 'Coaching': new FormArray([], Validators.required),
+      // 'GroupPlayers': new FormArray([], Validators.required),
       'Name': new FormControl(''),
       'Location': new FormControl(''),
     });
@@ -62,7 +62,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         const data: any = copy;
         const id = data.Id;
         delete data.Id;
-        this.editForm.setValue(data);
+        this.editForm.patchValue(data);
         data.Id = id;
       }
     );

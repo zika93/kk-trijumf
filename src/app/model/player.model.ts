@@ -2,11 +2,12 @@ import {isNullOrUndefined} from 'util';
 import {Values} from '../shared/static/values';
 import {Fee} from './fee.model';
 import {Group} from './group.model';
+import {Activity} from './activity.model';
 export class Player {
 
   constructor(public Fees: Fee[],
               public Groups: Group[],
-              public Activities: any,
+              public Activities: Activity[],
               public Id: number,
               public Name: string,
               public MiddleName: string,

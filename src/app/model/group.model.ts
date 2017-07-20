@@ -1,5 +1,7 @@
+import {Activity} from './activity.model';
+
 export class Group {
-  constructor(public Activity: any[],
+  constructor(public Activities: Activity[],
               /*public Coaching: any[],
               public GroupPlayers: any[],*/
               public Id: number,
