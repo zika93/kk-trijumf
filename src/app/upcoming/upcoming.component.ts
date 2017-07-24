@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Activity} from '../model/activity.model';
 import {CoachService} from '../coach/coach.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-upcoming',
@@ -9,20 +10,20 @@ import {CoachService} from '../coach/coach.service';
 })
 export class UpcomingComponent implements OnInit {
 
-  title = 'Upcoming';
+  @Input() title = 'Upcoming';
 
-  upcomingArr: Activity[] = [];
+  @Input() upcoming: Activity[] = [];
 
-  constructor(private service: CoachService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.service.getUpcoming(1).subscribe((data: any) => {
-      this.upcomingArr = data;
-    });
   }
 
-  private openGroup(id) {
+  private openActivity(id) {
     console.log(id);
   }
 
+  noUpcoming() {
+    return isNullOrUndefined(this.upcoming) || this.upcoming.length === 0;
+  }
 }

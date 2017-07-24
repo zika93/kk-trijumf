@@ -12,12 +12,13 @@ import {AuthGuard} from './auth/auth-guard.service';
 import {PlayerEditComponent} from './player-list/player/edit-player/edit-player.component';
 import {GroupComponent} from './group-list/group/group.component';
 import {EditGroupComponent} from './group-list/group/edit-group/edit-group.component';
+import {HomeComponent} from './home/home.component';
 
 
 const appRoutes: Routes = [
   { path: '',
     children: [
-      { path: '', component: UpcomingComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'groups', component: GroupListComponent },
       { path: 'groups/new', component: EditGroupComponent },
       { path: 'groups/:id/edit', component: EditGroupComponent },

@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <li appCursorPointer [routerLink]="['/','groups',group.Id]" class="list-group-item"
+          appHover="list-group-item-info" *ngFor="let group of groups">
+        {{group.Name}}<span class="pull-right badge">
+      {{group.Id}}
+      </span></li>
+    </ul>
+  </div>
+</div>

@@ -162,7 +162,7 @@
 
                   <div class="col-xs-8">
                     <select class="form-control" formControlName="Id">
-                      <option *ngFor="let singleOne of players" [value]="singleOne.Id">{{singleOne.Name}} {{singleOne.MiddleName}} {{singleOne.Surname}}</option>
+                      <option *ngFor="let singleOne of players" [value]="singleOne.Id" [disabled]="isPlayerSelected(singleOne.Id)">{{singleOne.Name}} {{singleOne.MiddleName}} {{singleOne.Surname}}</option>
                     </select>
                   </div>
                   <div class="col-xs-4">
@@ -183,27 +183,72 @@
     </div>
 
 
-      <!--<div class="row">-->
-        <!--<div class="panel panel-default">-->
-          <!--<div class="panel-heading">-->
-            <!--Coaching:-->
-            <!--<div class="btn-toolbar pull-right">-->
-              <!--<button class="btn btn-default btn-xs " type="button">-->
-                <!--<span class="glyphicon glyphicon-refresh"></span>-->
-              <!--</button>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="panel-body collapse">-->
-            <!--<div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">-->
-              <!--<div class="list-group" formArrayName="Coaching">-->
-                <!--<div class="list-group-item" *ngFor="let coaching of editForm.get('Coaching').controls;let i = index">-->
-                  <!--<input type="text" class="form-control" [formControlName]="i">-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Coaching:
+            <div class="btn-toolbar pull-right">
+              <button class="btn btn-success btn-xs"  type="button" (click)="onAddCoach()">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button class="btn btn-default btn-xs " type="button">
+                <span class="glyphicon glyphicon-refresh"></span>
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+              <div class="list-group" formArrayName="Coaching">
+                <div
+                  class="row"
+                  *ngFor="let coach of editForm.get('Coaching').controls; let i = index"
+                  [formGroupName]="i"
+                  style="margin-top: 10px;">
+                  <!--Hidden-->
+                  <div [hidden]="true">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [hidden]="true"
+                      formControlName="Name">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [hidden]="true"
+                      formControlName="Surname">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [hidden]="true"
+                      formControlName="Birthday">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [hidden]="true"
+                      formControlName="CoachId">
+                  </div>
+                  <!--End of Hidden-->
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <select class="form-control" formControlName="Id">
+                        <option *ngFor="let singleOne of coaches" [value]="singleOne.Id" [disabled]="isCoachSelected(singleOne.Id)">{{singleOne.Name}} {{singleOne.Surname}}</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-4">
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="onDeleteItem('Coaching', i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!--<div class="row">-->
         <!--<div class="panel panel-default">-->

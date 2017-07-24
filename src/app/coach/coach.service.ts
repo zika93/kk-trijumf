@@ -57,4 +57,22 @@ export class CoachService implements OnInit {
     ).catch(HttpHelper.handleErrorObservable);
   }
 
+  getGroups(id: number) {
+    return this.http.get(Values.url + '/group/getgroupsforcoach/' + id).map(
+      (response: Response) => {
+        console.log(response.json());
+        return response.json();
+      }
+    ).catch(HttpHelper.handleErrorObservable);
+  }
+
+  getCoaches() {
+    return this.http.get(Values.url + '/coach/getall/').map(
+      (response: Response) => {
+        console.log('getCoaches:');
+        console.log(response.json());
+        return response.json();
+      }
+    ).catch(HttpHelper.handleErrorObservable);
+  }
 }

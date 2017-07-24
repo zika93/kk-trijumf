@@ -32,6 +32,8 @@ import {CoachService} from './coach/coach.service';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { ActivityTypeComponent } from './activity-type/activity-type.component';
 import {LoadingService} from './shared/loading.service';
+import { ListGroupComponent } from './list-group/list-group.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -56,7 +58,9 @@ import {LoadingService} from './shared/loading.service';
     AppDatePipe,
     EditGroupComponent,
     FileUploaderComponent,
-    ActivityTypeComponent
+    ActivityTypeComponent,
+    ListGroupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

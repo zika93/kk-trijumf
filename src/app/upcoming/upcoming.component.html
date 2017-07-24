@@ -12,14 +12,13 @@
 <!--</div>-->
 
 <div class="panel panel-warning">
-<div class="panel-heading">{{title}}</div>
+<div class="panel-heading panel-heading-custom">{{title}}</div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 scrollable size-500">
     <a
       style="cursor: pointer"
-      class="list-group-item clearfix"
-      *ngFor="let up of upcomingArr"
-      (click)="openGroup(up.Id)">
+      *ngFor="let up of upcoming"
+      [ngClass]="up.Type == 1?'list-group-item clearfix':'list-group-item list-group-item-danger clearfix'">
       <div class="pull-left">
         <h4 class="list-group-item-text">{{ up.Name }}</h4>
         <p class="list-group-item-heading">{{ up.Date | date:'HH:MM dd.MM.yy.' }}</p>
@@ -28,6 +27,9 @@
       {{up.GroupId}}
       </span>
     </a>
+      <div *ngIf="noUpcoming()">
+        <h4 class="list-group-item-text">No upcoming activities...</h4>
+      </div>
   </div>
   </div>
 </div>

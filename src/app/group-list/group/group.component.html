@@ -95,6 +95,35 @@
     </div>
   </div>
 
+
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Coaches:
+        <div class="btn-toolbar pull-right">
+          <button class="btn btn-default btn-xs" (click)="toggleCollapseCoaches()">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+          </button>
+          <button class="btn btn-default btn-xs" (click)="alert('refresh Coaches!')">
+            <span class="glyphicon glyphicon-refresh"></span>
+          </button>
+        </div>
+      </div>
+      <div class="panel-body collapse" [ngClass]="{ 'in': isCollapsedCoaches }">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+          <ul class="list-group">
+            <li appCursorPointer [routerLink]="['/','coach',coach.Id]" class="list-group-item" appHover="list-group-item-info"
+                *ngFor="let coach of group.Coaching">
+              {{coach.Name}} {{coach.Surname}}<span class="pull-right badge">
+      {{coach.Id}}
+      </span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 

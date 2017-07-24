@@ -13,11 +13,12 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  group: Group = new Group([], /*[],*/ [], null, '', '');
+  group: Group = new Group([], [], [], null, '', '');
   id: number;
 
   isCollapsedActivities = false;
   isCollapsedPlayers = false;
+  isCollapsedCoaches = false;
 
   constructor(private service: GroupService,
               private route: ActivatedRoute,
@@ -56,5 +57,8 @@ export class GroupComponent implements OnInit, OnDestroy {
   }
   toggleCollapsePlayers() {
     this.isCollapsedPlayers = !this.isCollapsedPlayers;
+  }
+  toggleCollapseCoaches() {
+    this.isCollapsedCoaches = !this.isCollapsedCoaches;
   }
 }

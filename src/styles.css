@@ -1,6 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 .purple{
-  background-color: #230177;
+  background-color: #815aa4;
+}
+
+.panel-default > .panel-heading-custom, .panel-warning > .panel-heading-custom {
+  background: #815aa4;
+  color: #fff;
+}
+
+.scrollable {
+  overflow-y:auto;
+}
+
+.size-500 {
+  max-height: 500px;
 }
 
 body{
