@@ -10,6 +10,7 @@ export class AppDatePipe implements PipeTransform {
     if (value === null) {
       return '';
     }
+    // console.warn(value);
     return DateHelper.toDateString(value);
   }
 }

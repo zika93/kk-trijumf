@@ -28,7 +28,7 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subPlayers = this.service.getAll().subscribe(
+    this.subPlayers = this.service.fetchAllPlayers().subscribe(
       (players: Player[]) => {
         console.log(players);
         this.players = players;

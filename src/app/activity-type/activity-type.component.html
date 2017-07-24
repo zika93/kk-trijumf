@@ -1,0 +1,15 @@
+<!--<div class="dropdown">-->
+  <!--<button class="btn btn-default dropdown-toggle" appDropdown type="button" id="menu1" data-toggle="dropdown">-->
+    <!--{{toShow(+jsonString)}}-->
+    <!--<span class="caret"></span></button>-->
+  <!--<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">-->
+    <!--<li *ngFor="let type of activityTypes" role="presentation"><a role="menuitem" tabindex="-1" >-->
+      <!--{{type.Value}}-->
+    <!--</a></li>-->
+  <!--</ul>-->
+<!--</div>-->
+
+
+<select class="form-control" value="{{toShow(+jsonString)}}">
+  <option *ngFor="let type of activityTypes" >{{type.Value}}</option>
+</select>

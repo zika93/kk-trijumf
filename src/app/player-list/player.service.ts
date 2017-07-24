@@ -32,7 +32,7 @@ export class PlayerService {
 
   fetchAllPlayers() {
     console.log('fetching!');
-    return this.http.get(Values.url + '/players/getall').map(
+    return this.http.get(Values.url + '/player/getall').map(
       (response: Response) => {
         console.log(response.json());
         this.players = response.json();
@@ -46,7 +46,7 @@ export class PlayerService {
   }
 
   getPlayer(id: number) {
-    if (isNullOrUndefined(this.players) || this.players.length == 0) {
+    if (isNullOrUndefined(this.players) || this.players.length === 0) {
       return this.fetchPlayer(id);
     }
     const pl = this.players.filter(x =>
@@ -62,10 +62,10 @@ export class PlayerService {
   }
 
   fetchPlayer(id: number) {
-    return this.http.get(Values.url + '/players/get/' + id).map(
+    return this.http.get(Values.url + '/player/get/' + id).map(
       (response: Response) => {
         const player: Player = response.json();
-        console.log( response.json());
+        console.log(response.json());
         console.log(player);
         this.changePlayer(player);
         return response.json();
@@ -74,7 +74,7 @@ export class PlayerService {
   }
 
   fetchPlayerFees(id: number) {
-    return this.http.get(Values.url + '/players/getfees/' + id).map(
+    return this.http.get(Values.url + '/player/getfees/' + id).map(
       (response: Response) => {
         return response.json();
       }
@@ -82,12 +82,12 @@ export class PlayerService {
   }
 
   createPlayer(player: Player) {
-    return this.http.post(Values.url + '/players/create', player).map(HttpHelper.extractData)
+    return this.http.post(Values.url + '/player/create', player).map(HttpHelper.extractData)
       .catch(HttpHelper.handleErrorObservable);
   }
 
   updatePlayer(player: Player) {
-    return this.http.post(Values.url + '/players/update', player).map(
+    return this.http.post(Values.url + '/player/update', player).map(
       (res: Response) => {
         this.changePlayer(player);
       })
@@ -95,19 +95,21 @@ export class PlayerService {
   }
 
   fetchPlayerGroups(id: number) {
-    return this.http.get(Values.url + '/players/getgroups/' + id).map(HttpHelper.extractData)
+    return this.http.get(Values.url + '/player/getgroups/' + id).map(HttpHelper.extractData)
       .catch(HttpHelper.handleErrorObservable);
   }
 
 
   changePlayer(player: Player) {
-    if (isNullOrUndefined(this.players))
-     this.players = [];
+    if (isNullOrUndefined(this.players)) {
+      this.players = [];
+    }
     const objIndex = this.players.findIndex((obj => obj.Id === player.Id));
-    if(objIndex !== -1)
+    if (objIndex !== -1) {
       this.players[objIndex] = player;
-    else
+    } else {
       this.players.push(player);
+    }
   }
 
 }

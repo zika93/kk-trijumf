@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Values} from '../../shared/static/values';
 import {Fee} from '../../model/fee.model';
 import {Group} from '../../model/group.model';
+import {LoadingService} from '../../shared/loading.service';
 
 @Component({
   selector: 'app-player',
@@ -42,20 +43,24 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private service: PlayerService,
-              private router: Router) {
+              private router: Router,
+              private loader: LoadingService) {
   }
 
   ngOnInit() {
+    // this.loader.loading.next(LoadingService.START_LOADING);
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.sub = this.service.getPlayer(this.id).subscribe(
+        this.sub = this.service.fetchPlayer(this.id).subscribe(
           (player: Player) => {
             console.log(player);
             player.Birthday = new Date(player.Birthday);
             this.player = player;
-            if (this.player.Picture !== null)
+            if (this.player.Picture !== null) {
               this.imgUrl = this.player.Picture;
+            }
+            // this.loader.loading.next(false);
           }
         );
       }
@@ -73,13 +78,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
+    // this.loader.loading.next(LoadingService.START_LOADING);
     this.sub = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
         console.log(player);
         player.Birthday = new Date(player.Birthday);
         this.player = player;
-        if (this.player.Picture !== null)
+        if (this.player.Picture !== null) {
           this.imgUrl = this.player.Picture;
+        }
+        // this.loader.loading.next(LoadingService.STOP_LOADING);
       }
     );
   }
@@ -98,7 +106,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   refreshGroups() {
-   // players/getgroups/{playerId}
+    // players/getgroups/{playerId}
     this.service.fetchPlayerGroups(this.id).subscribe(
       (param: Params) => {
         console.log(param);

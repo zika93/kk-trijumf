@@ -19,13 +19,13 @@
       style="cursor: pointer"
       class="list-group-item clearfix"
       *ngFor="let up of upcomingArr"
-      (click)="openGroup(up.group)">
+      (click)="openGroup(up.Id)">
       <div class="pull-left">
-        <h4 class="list-group-item-heading">{{ up.date | date:'HH:MM dd.MM.yy.' }}</h4>
-        <p class="list-group-item-text">{{ up.name }}</p>
+        <h4 class="list-group-item-text">{{ up.Name }}</h4>
+        <p class="list-group-item-heading">{{ up.Date | date:'HH:MM dd.MM.yy.' }}</p>
       </div>
       <span class="pull-right badge">
-      {{up.group}}
+      {{up.GroupId}}
       </span>
     </a>
   </div>

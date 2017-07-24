@@ -61,14 +61,12 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       data.Id = this.id;
       this.service.updatePlayer(data).subscribe(res => {
-          console.log('wohooo');
-          this.id = -1;
+          this.onCancel();
         },
         error => console.log(error));
     } else {
       this.service.createPlayer(data).subscribe(res => {
-          console.log('wohooo');
-          this.id = -1;
+          this.onCancel();
         },
         error => console.log(error));
     }
@@ -88,8 +86,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         const id = data.Id;
         delete data.Id;
         delete data.Thumbnail;
-        if (!isNullOrUndefined(data.Picture))
+        if (!isNullOrUndefined(data.Picture)) {
           this.pic = data.Picture;
+        }
         data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
         data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
         console.warn(data);

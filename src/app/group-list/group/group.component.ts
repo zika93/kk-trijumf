@@ -13,9 +13,11 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
-  group: Group = new Group([], /*[], [],*/ null, '', '');
+  group: Group = new Group([], /*[],*/ [], null, '', '');
   id: number;
 
+  isCollapsedActivities = false;
+  isCollapsedPlayers = false;
 
   constructor(private service: GroupService,
               private route: ActivatedRoute,
@@ -26,9 +28,12 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.sub = this.service.getGroup(this.id).subscribe(
+        this.sub = this.service.fetchGroup(this.id).subscribe(
           (group: Group) => {
             console.log(group);
+            // for (const activity of group.Activities){
+            //   activity.Date = new Date(activity.Date);
+            // }
             this.group = group;
           }
         );
@@ -46,4 +51,10 @@ export class GroupComponent implements OnInit, OnDestroy {
   }
 
 
+  toggleCollapseActivities() {
+    this.isCollapsedActivities = !this.isCollapsedActivities;
+  }
+  toggleCollapsePlayers() {
+    this.isCollapsedPlayers = !this.isCollapsedPlayers;
+  }
 }

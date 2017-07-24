@@ -1,3 +1,4 @@
+<script src="edit-group.component.ts"></script>
 <div class="container-fluid">
   <form [formGroup]="editForm" (submit)="onSubmit()">
     <div class="row">
@@ -11,7 +12,7 @@
             <div class="row">
               <div class="col-xs-12 col-sm-4 center-block">
                 <div class="row">
-                  <button class="btn btn-success" type="submit">Save</button>
+                  <button class="btn btn-success" [disabled]="!editForm.valid" type="submit">Save</button>
                   <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
                   <button *ngIf="editMode" type="button" class="btn btn-default" (click)="onRefresh()">
                     <span class="glyphicon glyphicon-refresh"></span> Refresh
@@ -54,14 +55,133 @@
           <div class="panel-body">
             <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
               <div class="list-group" formArrayName="Activities">
-                <div class="list-group-item" *ngFor="let activity of editForm.get('Activities').controls;let i = index">
-                  <input type="text" class="form-control" [formControlName]="i">
+                <div
+                  class="row"
+                  *ngFor="let activity of editForm.get('Activities').controls; let i = index"
+                  [formGroupName]="i"
+                  style="margin-top: 10px;">
+                  <input
+                    type="number"
+                    [hidden]="true"
+                    formControlName="Id">
+                  <input
+                    type="number"
+                    [hidden]="true"
+                    formControlName="GroupId">
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="Name"
+                        placeholder="Name">
+                    </div>
+
+                    <div class="col-xs-4">
+                      <select class="form-control" formControlName="Type">
+                        <option *ngFor="let type of activityTypes" [value]="type.Id">{{type.Name}}</option>
+                      </select>
+                    </div>
+
+
+                  </div>
+
+                  <br>
+
+                 <div class="row">
+
+                   <div class="col-xs-8">
+                     <input
+                       type="text"
+                       class="form-control"
+                       formControlName="Date"
+                       placeholder="Date (format: dd/MM/yyy HH:mm)">
+                   </div>
+
+                   <div class="col-xs-4">
+                     <button
+                       type="button"
+                       class="btn btn-danger btn-sm"
+                       (click)="onDeleteItem('Activities', i)">
+                       <span class="glyphicon glyphicon-remove"></span>
+                     </button>
+                   </div>
+
+                 </div>
+
+                  <hr>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Players:
+          <div class="btn-toolbar pull-right">
+            <button class="btn btn-success btn-xs"  type="button" (click)="onAddPlayer()">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <button class="btn btn-default btn-xs " type="button">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+            <div class="list-group" formArrayName="GroupPlayers">
+              <div
+                class="row"
+                *ngFor="let player of editForm.get('GroupPlayers').controls; let i = index"
+                [formGroupName]="i"
+                style="margin-top: 10px;">
+                <!--Hidden-->
+                <div [hidden]="true">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [hidden]="true"
+                    formControlName="Name">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [hidden]="true"
+                    formControlName="Surname">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [hidden]="true"
+                    formControlName="MiddleName">
+                </div>
+                <!--End of Hidden-->
+                <div class="row">
+
+                  <div class="col-xs-8">
+                    <select class="form-control" formControlName="Id">
+                      <option *ngFor="let singleOne of players" [value]="singleOne.Id">{{singleOne.Name}} {{singleOne.MiddleName}} {{singleOne.Surname}}</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-4">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      (click)="onDeleteItem('GroupPlayers', i)">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
       <!--<div class="row">-->
         <!--<div class="panel panel-default">-->

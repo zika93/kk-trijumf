@@ -29,7 +29,9 @@ import { AppDatePipe } from './shared/app-date.pipe';
 import {GroupService} from './group-list/group.service';
 import { EditGroupComponent } from './group-list/group/edit-group/edit-group.component';
 import {CoachService} from './coach/coach.service';
-// import { FileUploaderComponent } from './file-uploader/file-uploader.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
+import { ActivityTypeComponent } from './activity-type/activity-type.component';
+import {LoadingService} from './shared/loading.service';
 
 
 
@@ -52,8 +54,9 @@ import {CoachService} from './coach/coach.service';
     DateValueAccessorDirective,
     HoverDirective,
     AppDatePipe,
-    EditGroupComponent
-    // FileUploaderComponent
+    EditGroupComponent,
+    FileUploaderComponent,
+    ActivityTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,7 @@ import {CoachService} from './coach/coach.service';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService, CoachService],
+  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService, CoachService, LoadingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,7 +29,7 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subGroups = this.service.getAll().subscribe(
+    this.subGroups = this.service.fetchAllGroups().subscribe(
       (groups: Group[]) => {
         console.log(groups);
         this.groups = groups;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Activity} from '../model/activity.model';
+import {CoachService} from '../coach/coach.service';
 
 @Component({
   selector: 'app-upcoming',
@@ -9,15 +11,14 @@ export class UpcomingComponent implements OnInit {
 
   title = 'Upcoming';
 
-  upcomingArr: {name: string, group: number, date: Date}[] = [
-    {name : '2002. Dusko', group : 1, date: new Date('2005/01/01')},
-    {name : '2004. Dusko', group : 2, date: new Date('2005/01/01')},
-    {name : '2006. Dusko', group : 3, date: new Date('2005/01/01')},
-  ];
+  upcomingArr: Activity[] = [];
 
-  constructor() { }
+  constructor(private service: CoachService) { }
 
   ngOnInit() {
+    this.service.getUpcoming(1).subscribe((data: any) => {
+      this.upcomingArr = data;
+    });
   }
 
   private openGroup(id) {

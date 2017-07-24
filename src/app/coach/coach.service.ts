@@ -1,33 +1,58 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Values} from '../shared/static/values';
 import {HttpHelper} from '../shared/http-helper';
 import 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 
 @Injectable()
-export class CoachService {
+export class CoachService implements OnInit {
 
-  activityType: { [id: number]: string; } = {};
+  activityTypes: any[] = [];
 
   constructor(private http: Http) {
   }
 
-  getActivityType(id: number) {
-    if (Object.keys(this.activityType).length === 0) {
-      console.log('returning fetched!');
-      return this.fetchActivityTypes(1);
-    } else {
-      return this.activityType[id];
+  ngOnInit(): void {
+    this.fetchActivityTypes().subscribe(
+      (data: any) => {
+        Object.keys(data).forEach(key => this.activityTypes.push({Id: key, Value: data[key]}));
+        console.warn(this.activityTypes);
       }
+    );
   }
 
-  fetchActivityTypes(id: number) {
-    return this.http.get(Values.url + 'coach/getupcoming/').map(
-      (response: Response) => {
+  getActivityType(id: number) {
+    return this.activityTypes[id];
+  }
 
-        const keys = response.json();
-        console.log(keys);
-        return this.activityType;
+  getActivityTypes() {
+    if (this.activityTypes.length === 0) {
+      return this.fetchActivityTypes();
+    } else {
+      return Observable.create((observer: Observer<any[]>) => {
+        observer.next(this.activityTypes);
+      });
+    }
+  }
+
+  fetchActivityTypes() {
+    return this.http.get(Values.url + '/activitytype/getall/').map(
+      (response: Response) => {
+        this.activityTypes = response.json();
+        console.warn(this.activityTypes);
+        return this.activityTypes;
+      }
+    ).catch(HttpHelper.handleErrorObservable);
+  }
+
+
+  getUpcoming(id: number) {
+    return this.http.get(Values.url + '/activity/getupcomingforcoach/' + id).map(
+      (response: Response) => {
+        console.log(response.json());
+        return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);
   }
