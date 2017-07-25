@@ -1,35 +1,36 @@
 <!--<div class="panel panel-default">-->
 <!--<div class="panel-heading">{{title}}</div>-->
-  <!--<div class="panel-body">-->
-    <!--<ul class="list-group">-->
-      <!--<li class="list-group-item"-->
-          <!--(click)="openGroup(up.group)">-->
-        <!--<div class="pull-left">{{up.name}}</div>-->
-        <!--<span class="pull-right">{{up.group}}</span>-->
-      <!--</li>-->
-    <!--</ul>-->
-  <!--</div>-->
+<!--<div class="panel-body">-->
+<!--<ul class="list-group">-->
+<!--<li class="list-group-item"-->
+<!--(click)="openGroup(up.group)">-->
+<!--<div class="pull-left">{{up.name}}</div>-->
+<!--<span class="pull-right">{{up.group}}</span>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
 <!--</div>-->
 
 <div class="panel panel-warning">
-<div class="panel-heading panel-heading-custom">{{title}}</div>
+  <div class="panel-heading panel-heading-custom">{{title}}</div>
   <div class="row">
-    <div class="col-xs-12 scrollable size-500">
-    <a
-      style="cursor: pointer"
-      *ngFor="let up of upcoming"
-      [ngClass]="up.Type == 1?'list-group-item clearfix':'list-group-item list-group-item-danger clearfix'">
-      <div class="pull-left">
-        <h4 class="list-group-item-text">{{ up.Name }}</h4>
-        <p class="list-group-item-heading">{{ up.Date | date:'HH:MM dd.MM.yy.' }}</p>
-      </div>
-      <span class="pull-right badge">
+    <div class="col-xs-12 scrollable size-300">
+      <a
+        appCursorPointer
+        *ngFor="let up of upcoming"
+        [routerLink]="['/', 'activity', up.Id]"
+        [ngClass]="up.Type == 1?'list-group-item clearfix':'list-group-item list-group-item-danger clearfix'">
+        <div class="pull-left">
+          <h4 class="list-group-item-text">{{ up.Name }}</h4>
+          <p class="list-group-item-heading">{{ up.Date | date:'HH:MM dd.MM.yy.' }}</p>
+        </div>
+        <span class="pull-right badge">
       {{up.GroupId}}
       </span>
-    </a>
+      </a>
       <div *ngIf="noUpcoming()">
-        <h4 class="list-group-item-text">No upcoming activities...</h4>
+        <h3 class="list-group-item-text" style="text-align:center;">No upcoming activities...</h3>
       </div>
-  </div>
+    </div>
   </div>
 </div>

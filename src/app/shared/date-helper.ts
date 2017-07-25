@@ -2,8 +2,13 @@ import {Values} from './static/values';
 
 export class DateHelper {
 
-  public static parseStringToDate(str: string) {
-    if (str.length === 10 &&
+  public static parseStringToDate(str) {
+    if (str instanceof Date) {
+      return str;
+    }
+    if (typeof str === 'string'
+      &&
+      str.length === 10 &&
       ( str.match(Values.dateMatch) )) {
 
       const
@@ -17,8 +22,13 @@ export class DateHelper {
     return null;
   }
 
-  public static parseStringToDateTime(str: string) {
-    if (str.length === 16
+  public static parseStringToDateTime(str) {
+    if (str instanceof Date) {
+      return str;
+    }
+    if (typeof str === 'string'
+      &&
+      str.length === 16
       &&
       ( str.match(Values.dateTimeMatch) )
     ) {

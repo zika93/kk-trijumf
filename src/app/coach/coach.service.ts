@@ -23,10 +23,6 @@ export class CoachService implements OnInit {
     );
   }
 
-  getActivityType(id: number) {
-    return this.activityTypes[id];
-  }
-
   getActivityTypes() {
     if (this.activityTypes.length === 0) {
       return this.fetchActivityTypes();

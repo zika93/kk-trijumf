@@ -3,6 +3,7 @@ import {GroupService} from '../group.service';
 import {Group} from '../../model/group.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-group',
@@ -20,6 +21,8 @@ export class GroupComponent implements OnInit, OnDestroy {
   isCollapsedPlayers = false;
   isCollapsedCoaches = false;
 
+  addActivity = false;
+
   constructor(private service: GroupService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -29,36 +32,50 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.sub = this.service.fetchGroup(this.id).subscribe(
-          (group: Group) => {
-            console.log(group);
-            // for (const activity of group.Activities){
-            //   activity.Date = new Date(activity.Date);
-            // }
-            this.group = group;
-          }
-        );
+        this.onRefresh();
       }
     );
   }
 
+  onRefresh() {
+    this.ngOnDestroy();
+    this.sub = this.service.fetchGroup(this.id).subscribe(
+      (group: Group) => {
+        this.group = group;
+      }
+    );
+  }
 
   onEdit() {
-    this.router.navigate(['edit'], { relativeTo: this.route});
+    this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    if (!isNullOrUndefined(this.sub)) {
+      this.sub.unsubscribe();
+    }
   }
 
 
   toggleCollapseActivities() {
     this.isCollapsedActivities = !this.isCollapsedActivities;
   }
+
   toggleCollapsePlayers() {
     this.isCollapsedPlayers = !this.isCollapsedPlayers;
   }
+
   toggleCollapseCoaches() {
     this.isCollapsedCoaches = !this.isCollapsedCoaches;
   }
+
+  addActivities() {
+    this.addActivity = !this.addActivity;
+  }
+
+  onAddedActivity() {
+    this.addActivity = !this.addActivity;
+    this.onRefresh();
+  }
+
 }

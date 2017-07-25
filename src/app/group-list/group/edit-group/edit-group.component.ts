@@ -19,7 +19,6 @@ import {AppValidators} from '../../../shared/app-validators';
 })
 export class EditGroupComponent implements OnInit, OnDestroy {
   id: number;
-  addPlayers = false;
   activityTypes: any[] = [];
   players: any[] = [];
   coaches: any[] = [];

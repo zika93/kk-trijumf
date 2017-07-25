@@ -19,6 +19,10 @@ export class HeadingNavComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
   }
 
+  toggleClose() {
+    this.isCollapsed = false;
+  }
+
   onLogout() {
     this.auth.onLogout();
   }

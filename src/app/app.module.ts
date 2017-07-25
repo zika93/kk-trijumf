@@ -34,6 +34,10 @@ import { ActivityTypeComponent } from './activity-type/activity-type.component';
 import {LoadingService} from './shared/loading.service';
 import { ListGroupComponent } from './list-group/list-group.component';
 import { HomeComponent } from './home/home.component';
+import { ActivityComponent } from './activity/activity/activity.component';
+import {ActivityService} from './activity/activity.service';
+import { EditActivityComponent } from './activity/edit-activity/edit-activity.component';
+import { AddActivityComponent } from './activity/add-activity/add-activity.component';
 
 
 
@@ -60,7 +64,10 @@ import { HomeComponent } from './home/home.component';
     FileUploaderComponent,
     ActivityTypeComponent,
     ListGroupComponent,
-    HomeComponent
+    HomeComponent,
+    ActivityComponent,
+    EditActivityComponent,
+    AddActivityComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +76,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService, CoachService, LoadingService],
+  providers: [AuthService, AuthGuard, PlayerService, DatePipe, GroupService, CoachService, LoadingService, ActivityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

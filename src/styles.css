@@ -10,10 +10,15 @@
 
 .scrollable {
   overflow-y:auto;
+  /*overflow: -moz-scrollbars-none;*/
 }
 
 .size-500 {
   max-height: 500px;
+}
+
+.size-300 {
+  max-height: 300px;
 }
 
 body{
@@ -25,4 +30,26 @@ body{
 
 input.ng-invalid.ng-touched {
   border: 1px solid red;
+}
+
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+/*.panel, .panel-heading, .panel-body {*/
+  /*border: 0px;*/
+/*}*/
+
+/*.panel-heading {*/
+  /*border-radius: 0px;*/
+/*}*/
+
+/*.panel-body {*/
+  /*border-radius: 0px;*/
+  /*background-color: white;*/
+/*}*/
+
+* {
+  border-radius: 0 !important;
 }
