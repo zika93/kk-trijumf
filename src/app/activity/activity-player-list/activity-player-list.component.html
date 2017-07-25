@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-group">
+        <li
+          appCursorPointer
+          appHover="list-group-item-info"
+          *ngFor="let pl of players; let i = index;"
+          class="list-group-item"
+          (click)="changeStatus(i)">
+
+          <img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}
+               style="max-height: 32px;max-width: 32px;">
+          <ng-template #defpic>
+            <img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">
+          </ng-template>
+          {{pl.Name}} {{pl.Surname}}
+          <span class="pull-right">
+            <span *ngIf="checked[i] == true;else nothere" class="glyphicon glyphicon-ok"></span>
+            <ng-template #nothere>
+              <span class="glyphicon glyphicon-remove"></span>
+            </ng-template>
+          </span>
+        </li>
+      </ul>
+    <button class="btn btn-success pull-right" (click)="submit()">
+      Submit
+    </button>
+    </div>
+  </div>
+
+
+  <!--<div class="form-group">-->
+  <!---->
+  <!--<div class="btn-group" *ngFor="let pl of players">-->
+  <!--<label for="fancy-checkbox-default" class=" btn btn-default active " >-->
+  <!--<img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}-->
+  <!--style="max-height: 32px;max-width: 32px;">-->
+  <!--<ng-template #defpic>-->
+  <!--<img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">-->
+  <!--</ng-template>-->
+  <!--{{pl.Name}} {{pl.Surname}}-->
+  <!--</label>-->
+  <!---->
+  <!--</div>-->
+  <!--</div>-->

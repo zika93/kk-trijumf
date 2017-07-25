@@ -38,6 +38,7 @@ import { ActivityComponent } from './activity/activity/activity.component';
 import {ActivityService} from './activity/activity.service';
 import { EditActivityComponent } from './activity/edit-activity/edit-activity.component';
 import { AddActivityComponent } from './activity/add-activity/add-activity.component';
+import { ActivityPlayerListComponent } from './activity/activity-player-list/activity-player-list.component';
 
 
 
@@ -67,7 +68,8 @@ import { AddActivityComponent } from './activity/add-activity/add-activity.compo
     HomeComponent,
     ActivityComponent,
     EditActivityComponent,
-    AddActivityComponent
+    AddActivityComponent,
+    ActivityPlayerListComponent
   ],
   imports: [
     BrowserModule,

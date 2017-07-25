@@ -26,33 +26,43 @@
           <hr>
           <div class="row">
             <div class="col-xs-12 col-sm-4 center-block">
-              <button class="btn btn-success" (click)="onStart()">Start activity</button>
+              <button class="btn btn-success" *ngIf="!isStarted()" (click)="onStart()">Start activity</button>
+              <button class="btn btn-primary" *ngIf="isStarted()" (click)="onRestart()">Restart activity</button>
             </div>
           </div>
 
           <br>
           <div class="row">
-            <div class="col-xs-12">
-              <ul class="list-group">
-                <li appCursorPointer class="list-group-item" appHover="list-group-item-info"
-                    *ngFor="let pl of players">
-
-
-                  <img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}
-                       style="max-height: 32px;max-width: 32px;">
-                  <ng-template #defpic>
-                    <img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">
-                  </ng-template>
-                  {{pl.Name}} {{pl.Surname}}
-                  <span class="pull-right badge">
-                    <input type="checkbox">
-                  </span>
-                </li>
-              </ul>
+            <div class="col-xs-12 center-block">
+                <app-activity-player-list
+                  [players]="players"
+                  [checked]="checked"
+                  [submit]="onActivitySubmit.bind(this)"></app-activity-player-list>
             </div>
           </div>
 
-        </div>
+          <!--<div class="row">-->
+            <!--<div class="col-xs-12">-->
+              <!--<ul class="list-group">-->
+                <!--<li appCursorPointer class="list-group-item" appHover="list-group-item-info"-->
+                    <!--*ngFor="let pl of players">-->
+
+
+                  <!--<img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}-->
+                       <!--style="max-height: 32px;max-width: 32px;">-->
+                  <!--<ng-template #defpic>-->
+                    <!--<img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">-->
+                  <!--</ng-template>-->
+                  <!--{{pl.Name}} {{pl.Surname}}-->
+                  <!--<span class="pull-right badge">-->
+                    <!--<input type="checkbox">-->
+                  <!--</span>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+
+        <!--</div>-->
       </div>
     </div>
 
