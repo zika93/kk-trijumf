@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{activity.Name}}:
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+
+          <app-add-activity
+            #child
+            [submitClick]="onSubmit.bind(this)"
+            [cancelClick]="onCancel.bind(this)"
+            [activity]="activity"
+            [submitButton]="saveButton()">
+
+          </app-add-activity>
+
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+

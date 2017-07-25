@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{activity.Name}}:
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 center-block">
+              <div class="row">
+                <button class="btn btn-primary" (click)="onEdit()">Edit</button>
+                <button type="button" class="btn btn-default" (click)="onRefresh()">
+                  <span class="glyphicon glyphicon-refresh"></span> Refresh
+                </button>
+              </div>
+            </div>
+            <br>
+            <div class="col-xs-12 col-sm-8">
+              <label for="name">Name:</label>
+              <h4 id="name"> {{activity.Name}}</h4>
+              <label for="middlename">Date:</label>
+              <h4 id="middlename"> {{activity.Date | date: 'dd.MM.yyyy HH:mm'}}</h4>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12 col-sm-4 center-block">
+              <button class="btn btn-success" (click)="onStart()">Start activity</button>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <ul class="list-group">
+                <li appCursorPointer class="list-group-item" appHover="list-group-item-info"
+                    *ngFor="let pl of players">
+
+
+                  <img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}
+                       style="max-height: 32px;max-width: 32px;">
+                  <ng-template #defpic>
+                    <img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">
+                  </ng-template>
+                  {{pl.Name}} {{pl.Surname}}
+                  <span class="pull-right badge">
+                    <input type="checkbox">
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
