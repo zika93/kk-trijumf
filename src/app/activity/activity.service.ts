@@ -43,7 +43,7 @@ export class ActivityService {
   }
 
   restartPlayerActivity(id: number) {
-    return this.http.get(Values.url + '/playeractivity/restart/' + id).map(
+    return this.http.post(Values.url + '/playeractivity/reset/', id).map(
       (response: Response) => {
         return response.json();
       }

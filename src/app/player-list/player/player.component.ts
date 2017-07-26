@@ -28,6 +28,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   isCollapsedFees = false;
   isCollapsedActivity = false;
 
+  addingFee = false;
+
   toggleCollapseGroups() {
     this.isCollapsedGroups = !this.isCollapsedGroups;
   }
@@ -92,8 +94,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
     );
   }
 
+  submitFee() {
+    this.onRefresh();
+  }
+
   addFee() {
-    console.log('add feeee');
+    this.addingFee = true;
+  }
+
+  cancelAddFee() {
+    this.addingFee = false;
   }
 
   refreshFee() {

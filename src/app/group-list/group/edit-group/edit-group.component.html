@@ -47,9 +47,9 @@
               <button class="btn btn-success btn-xs"  type="button" (click)="onAddActivity()">
                 <span class="glyphicon glyphicon-plus"></span>
               </button>
-              <button class="btn btn-default btn-xs " type="button">
-                <span class="glyphicon glyphicon-refresh"></span>
-              </button>
+              <!--<button class="btn btn-default btn-xs " type="button">-->
+                <!--<span class="glyphicon glyphicon-refresh"></span>-->
+              <!--</button>-->
             </div>
           </div>
           <div class="panel-body">
@@ -126,9 +126,9 @@
             <button class="btn btn-success btn-xs"  type="button" (click)="onAddPlayer()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
-            <button class="btn btn-default btn-xs " type="button">
-              <span class="glyphicon glyphicon-refresh"></span>
-            </button>
+            <!--<button class="btn btn-default btn-xs " type="button">-->
+              <!--<span class="glyphicon glyphicon-refresh"></span>-->
+            <!--</button>-->
           </div>
         </div>
         <div class="panel-body">
@@ -191,9 +191,9 @@
               <button class="btn btn-success btn-xs"  type="button" (click)="onAddCoach()">
                 <span class="glyphicon glyphicon-plus"></span>
               </button>
-              <button class="btn btn-default btn-xs " type="button">
-                <span class="glyphicon glyphicon-refresh"></span>
-              </button>
+              <!--<button class="btn btn-default btn-xs " type="button">-->
+                <!--<span class="glyphicon glyphicon-refresh"></span>-->
+              <!--</button>-->
             </div>
           </div>
           <div class="panel-body">
@@ -231,7 +231,11 @@
                   <div class="row">
                     <div class="col-xs-8">
                       <select class="form-control" formControlName="Id">
-                        <option *ngFor="let singleOne of coaches" [value]="singleOne.Id" [disabled]="isCoachSelected(singleOne.Id)">{{singleOne.Name}} {{singleOne.Surname}}</option>
+                        <option *ngFor="let singleOne of coaches"
+                                [value]="singleOne.Id"
+                                [disabled]="isCoachSelected(singleOne.Id)">
+                          {{singleOne.Name}} {{singleOne.Surname}}
+                        </option>
                       </select>
                     </div>
                     <div class="col-xs-4">

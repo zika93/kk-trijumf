@@ -29,6 +29,9 @@ export class HoverDirective implements OnInit {
       array = array + tmp + ' ';
     }
     this.defClass = array.substr(0, array.length - 1);
+    if (this.hoverClass.charAt(0) === '-') {
+      array = this.defClass;
+    }
     this.bindingClass = this.defClass;
     this.classToBind = array + this.hoverClass;
   }

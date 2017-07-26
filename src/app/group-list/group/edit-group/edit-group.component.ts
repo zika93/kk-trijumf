@@ -93,7 +93,6 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         if (data['Activities']) {
           for (const activity of data.Activities) {
             activity.Date = this.datepipe.transform(new Date(activity.Date), 'dd/MM/yyyy HH:mm');
-            ;
             (<FormArray>this.editForm.get('Activities')).push(
               new FormGroup({
                 'Name': new FormControl(activity.Name, Validators.required),

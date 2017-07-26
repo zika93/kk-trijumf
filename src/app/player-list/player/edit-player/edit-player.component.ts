@@ -9,6 +9,9 @@ import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../shared/date-helper';
 import {Values} from '../../../shared/static/values';
 import {isNullOrUndefined} from 'util';
+import {GroupService} from '../../../group-list/group.service';
+import {Group} from '../../../model/group.model';
+import {AppValidators} from '../../../shared/app-validators';
 
 @Component({
   selector: 'app-edit-player',
@@ -17,9 +20,12 @@ import {isNullOrUndefined} from 'util';
 })
 export class PlayerEditComponent implements OnInit, OnDestroy {
   id: number;
-  sub: Subscription;
+  subPlayers: Subscription;
+  subGroups: Subscription;
   editForm: FormGroup;
   editMode = false;
+  allGroups: any[] = [];
+
   pic = '../../../assets/img/user.svg';
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -29,7 +35,8 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private service: PlayerService,
-              private datepipe: DatePipe) {
+              private datepipe: DatePipe,
+              private serviceGroup: GroupService) {
   }
 
   private initForm() {
@@ -50,6 +57,13 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       'Picture': new FormControl(''),
       'Activities': new FormArray([])
     });
+
+    this.subGroups = this.serviceGroup.fetchAllGroups().subscribe(
+      (groups: any[]) => {
+        console.log(groups);
+        this.allGroups = groups;
+      }
+    );
   }
 
   onSubmit() {
@@ -57,6 +71,10 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
     const data = this.editForm.value;
     data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
     data.Medical = new Date(DateHelper.parseStringToDate(data.Medical));
+    for (const fee of data.Fees) {
+      fee.Date = new Date(DateHelper.parseStringToDate(fee.Date));
+      fee.Date.setHours(10);
+    }
     console.log(data);
     if (this.editMode) {
       data.Id = this.id;
@@ -77,7 +95,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
-    this.sub = this.service.getPlayer(this.id).subscribe(
+    this.subPlayers = this.service.getPlayer(this.id).subscribe(
       (player: Player) => {
         console.log('onRefresh:');
         console.log(player);
@@ -91,7 +109,38 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         }
         data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
         data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
+
+        if (data['Groups']) {
+          for (const group of data.Groups) {
+            (<FormArray>this.editForm.get('Groups')).push(
+              new FormGroup({
+                'Name': new FormControl(group.Name),
+                'Location': new FormControl(group.Location),
+                'Id': new FormControl(group.Id, Validators.required),
+                'Coaching': new FormArray([]),
+                'GroupPlayers': new FormArray([]),
+                'Activities': new FormArray([])
+              })
+            );
+          }
+        }
+        if (data['Fees']) {
+          for (const fee of data.Fees) {
+            fee.Date = this.datepipe.transform(new Date(fee.Date), 'dd/MM/yyyy');
+            (<FormArray>this.editForm.get('Fees')).push(
+              new FormGroup({
+                'Id': new FormControl(fee.Id, Validators.required),
+                'Date': new FormControl(fee.Date,
+                  [Validators.required, AppValidators.dateValidator]),
+                'PlayerId': new FormControl(fee.PlayerId, Validators.required),
+                'Fee': new FormControl(fee.Fee, Validators.required)
+              })
+            );
+          }
+        }
+        delete data.Activities;
         console.warn(data);
+
         this.editForm.patchValue(data);
         data.Id = id;
       }
@@ -114,9 +163,21 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.sub != null) {
-      this.sub.unsubscribe();
+    if (this.subPlayers != null) {
+      this.subPlayers.unsubscribe();
     }
+  }
+
+  onAddGroup() {
+    const control = new FormGroup({
+      'Name': new FormControl(''),
+      'Location': new FormControl(''),
+      'Id': new FormControl('1', Validators.required),
+      'Coaching': new FormArray([]),
+      'GroupPlayers': new FormArray([]),
+      'Activities': new FormArray([])
+    });
+    (<FormArray>this.editForm.get('Groups')).push(control);
   }
 
   changeImage(e) {
@@ -136,5 +197,20 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
   triggerFile() {
     this.fileInput.nativeElement.click();
+  }
+
+  getControls(name: string) {
+    // const values = this.editForm.get(name).value;
+    const form = this.editForm.get(name) as FormArray;
+    return form.controls;
+  }
+
+  isGroupSelected(id: number) {
+    const groups = this.getControls('Groups');
+    return groups.findIndex(z => z.value.Id === id) !== -1;
+  }
+
+  onDeleteItem(name: string, index: number) {
+    (<FormArray>this.editForm.get(name)).removeAt(index);
   }
 }

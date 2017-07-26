@@ -7,7 +7,7 @@ export class Player {
 
   constructor(public Fees: Fee[],
               public Groups: Group[],
-              public Activities: Activity[],
+              public Activities: any[],
               public Id: number,
               public Name: string,
               public MiddleName: string,

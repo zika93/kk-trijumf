@@ -19,14 +19,14 @@
         appCursorPointer
         *ngFor="let up of upcoming"
         [routerLink]="['/', 'activity', up.Id]"
-        [ngClass]="up.Type == 1?'list-group-item clearfix':'list-group-item list-group-item-danger clearfix'">
+        [ngClass]="up.Type == 1?'list-group-item clearfix':'list-group-item list-group-item-warning clearfix'">
         <div class="pull-left">
           <h4 class="list-group-item-text">{{ up.Name }}</h4>
-          <p class="list-group-item-heading">{{ up.Date | date:'HH:MM dd.MM.yy.' }}</p>
+          <p class="list-group-item-heading">{{ up.Date | date:'dd.MM.yyyy. HH:MM' }}</p>
         </div>
-        <span class="pull-right badge">
-      {{up.GroupId}}
-      </span>
+        <!--<span class="pull-right badge">-->
+      <!--{{up.GroupId}}-->
+      <!--</span>-->
       </a>
       <div *ngIf="noUpcoming()">
         <h3 class="list-group-item-text" style="text-align:center;">No upcoming activities...</h3>
