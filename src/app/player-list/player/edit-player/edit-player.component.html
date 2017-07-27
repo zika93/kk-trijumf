@@ -54,7 +54,11 @@
                 <span *ngIf="!editForm.get('Surname').valid && editForm.get('Surname').touched" class="help-block">
                   Please enter a valid surname!</span>
                 <label for="Birthday">Birthday:</label>
-                <input type="text" class="form-control" id="Birthday" formControlName="Birthday">
+                <input type="text"
+                       class="form-control"
+                       id="Birthday"
+                       formControlName="Birthday"
+                       placeholder="Date (format: dd/MM/yyy)">
               </div>
             </div>
 
@@ -79,7 +83,11 @@
                 <label for="Weight">Weight:</label>
                 <input type="number" class="form-control" id="Weight" formControlName="Weight">
                 <label for="Medical">Medical:</label>
-                <input type="text" class="form-control" id="Medical" formControlName="Medical">
+                <input type="text"
+                       class="form-control"
+                       id="Medical"
+                       formControlName="Medical"
+                       placeholder="Date (format: dd/MM/yyy)">
               </div>
               <div class="col-xs-12 col-sm-10 col-md-6">
                 <label for="SportsmanId">Sportsman Id:</label>

@@ -41,6 +41,7 @@ import {AddActivityComponent} from './activity/add-activity/add-activity.compone
 import {ActivityPlayerListComponent} from './activity/activity-player-list/activity-player-list.component';
 import {EditFeesComponent} from './fees/edit-fees/edit-fees.component';
 import {FeesService} from './fees/fees-service.service';
+import { CoachPageComponent } from './coach/coach-page/coach-page.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import {FeesService} from './fees/fees-service.service';
     EditActivityComponent,
     AddActivityComponent,
     ActivityPlayerListComponent,
-    EditFeesComponent
+    EditFeesComponent,
+    CoachPageComponent
   ],
   imports: [
     BrowserModule,

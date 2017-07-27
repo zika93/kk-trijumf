@@ -13,6 +13,8 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" ngModel class="form-control"  required>
         </div>
+        <span *ngIf="errorLogin" class="help-block red">
+                 Wrong e-mail or password!</span>
         <div class="btn btn-primary" type="submit" (click)="onSubmit()">Log In</div>
       </form>
     </div>

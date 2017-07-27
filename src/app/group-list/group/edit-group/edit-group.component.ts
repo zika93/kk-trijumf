@@ -124,6 +124,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
                 'Name': new FormControl(coach.Name),
                 'Surname': new FormControl(coach.Surname),
                 'CoachId': new FormControl(coach.CoachId),
+                'Username': new FormControl(coach.Username),
                 'Id': new FormControl(coach.Id, Validators.required),
                 'Birthday': new FormControl(coach.Birthday)
               })
@@ -173,6 +174,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     const control = new FormGroup({
       'Name': new FormControl(null),
       'Surname': new FormControl(null),
+      'Username': new FormControl(null),
       'CoachId': new FormControl(null),
       'Id': new FormControl(null, Validators.required),
       'Birthday': new FormControl(null)

@@ -6,7 +6,7 @@ export class AppValidators {
 
   public static dateValidator(control: FormControl): { [s: string]: boolean } {
     if (isNullOrUndefined(control.value)) {
-      return {'wrongFormattedDate': true};
+      return null;
     }
     if (control.value.length !== 10 || !control.value.toString().match(Values.dateMatch)) {
       return {'wrongFormattedDate': true};
@@ -16,7 +16,7 @@ export class AppValidators {
 
   public static dateTimeValidator(control: FormControl): { [s: string]: boolean } {
     if (isNullOrUndefined(control.value)) {
-      return {'wrongFormattedDate': true};
+      return null;
     }
     if (control.value.length !== 16 || !control.value.toString().match(Values.dateTimeMatch)) {
       return {'wrongFormattedDateTime': true};

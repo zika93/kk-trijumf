@@ -3,5 +3,6 @@ export class Coach {
               public Name: string,
               public Surname: string,
               public Birthday: Date,
-              public CoachId: number) {}
+              public CoachId: number,
+              public Username: string) {}
 }

@@ -3,6 +3,7 @@ import {Group} from '../model/group.model';
 import {CoachService} from '../coach/coach.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Activity} from '../model/activity.model';
+import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-home',
@@ -19,13 +20,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private service: CoachService) { }
 
   ngOnInit() {
-    this.subGroups = this.service.getGroups(1).subscribe(
+    this.subGroups = this.service.getGroups(+Cookie.get('id')).subscribe(
       (groups: Group[]) => {
         console.log(groups);
         this.groups = groups;
       }
     );
-    this.subUpcoming = this.service.getUpcoming(1).subscribe(
+    this.subUpcoming = this.service.getUpcoming(+Cookie.get('id')).subscribe(
       (upcoiming: Activity[]) => {
         console.log(upcoiming);
         this.upcoming = upcoiming;

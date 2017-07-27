@@ -71,4 +71,13 @@ export class CoachService implements OnInit {
       }
     ).catch(HttpHelper.handleErrorObservable);
   }
+
+  getCoach(id: string) {
+    return this.http.get(Values.url + '/administration/coach/getbyid/' + id).map(
+      (response: Response) => {
+        return response.json();
+      }
+    ).catch(HttpHelper.handleErrorObservable);
+  }
+
 }

@@ -15,6 +15,7 @@ import {EditGroupComponent} from './group-list/group/edit-group/edit-group.compo
 import {HomeComponent} from './home/home.component';
 import {ActivityComponent} from './activity/activity/activity.component';
 import {EditActivityComponent} from './activity/edit-activity/edit-activity.component';
+import {CoachPageComponent} from './coach/coach-page/coach-page.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
       { path: 'players/new', component: PlayerEditComponent },
       { path: 'players/:id/edit', component: PlayerEditComponent },
       { path: 'players/:id', component: PlayerComponent },
+      { path: 'profile', component: CoachPageComponent},
       { path: 'error', component: ErrorPageComponent },
 
   ],

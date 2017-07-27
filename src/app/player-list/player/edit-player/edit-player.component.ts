@@ -45,7 +45,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       'Name': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'MiddleName': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'Surname': new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      'Birthday': new FormControl(null),
+      'Birthday': new FormControl(null, AppValidators.dateValidator),
       'Medical': new FormControl(null),
       'SportsmanId': new FormControl(''),
       'PhoneNumber1': new FormControl(''),
@@ -69,8 +69,12 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     console.log(this.editForm);
     const data = this.editForm.value;
-    data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
-    data.Medical = new Date(DateHelper.parseStringToDate(data.Medical));
+    if (!isNullOrUndefined(data.Birthday) && data.Birthday !== '') {
+      data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
+    }
+    if (!isNullOrUndefined(data.Medical) && data.Medical !== '') {
+      data.Medical = new Date(DateHelper.parseStringToDate(data.Medical));
+    }
     for (const fee of data.Fees) {
       fee.Date = new Date(DateHelper.parseStringToDate(fee.Date));
       fee.Date.setHours(10);
