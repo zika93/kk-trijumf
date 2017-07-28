@@ -18,7 +18,7 @@ import {DatePipe} from '@angular/common';
 })
 export class AddActivityComponent implements OnInit, OnDestroy {
 
-  private activityForm: FormGroup;
+  public activityForm: FormGroup;
   activityTypes: any[] = [];
 
   sub: Subscription;

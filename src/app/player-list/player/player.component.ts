@@ -8,6 +8,7 @@ import {Values} from '../../shared/static/values';
 import {Fee} from '../../model/fee.model';
 import {Group} from '../../model/group.model';
 import {LoadingService} from '../../shared/loading.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-player',
@@ -95,7 +96,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   submitFee() {
-    this.onRefresh();
+    this.refreshFee();
   }
 
   addFee() {
@@ -111,6 +112,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.service.fetchPlayerFees(this.id).subscribe(
       (param: Params) => {
         this.player.Fees = <Fee[]>param;
+        this.cancelAddFee();
       }
     );
   }

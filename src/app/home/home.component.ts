@@ -13,8 +13,8 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 export class HomeComponent implements OnInit, OnDestroy {
 
 
-  private groups;
-  private upcoming;
+  public groups;
+  public upcoming;
   private subGroups: Subscription;
   private subUpcoming: Subscription;
   constructor(private service: CoachService) { }

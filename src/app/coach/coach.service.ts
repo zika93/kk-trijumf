@@ -1,17 +1,18 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import { Response} from '@angular/http';
 import {Values} from '../shared/static/values';
 import {HttpHelper} from '../shared/http-helper';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
+import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class CoachService implements OnInit {
 
   activityTypes: any[] = [];
 
-  constructor(private http: Http) {
+  constructor(private http: HttpAuthClient) {
   }
 
   ngOnInit(): void {

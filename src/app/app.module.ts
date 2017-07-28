@@ -42,6 +42,7 @@ import {ActivityPlayerListComponent} from './activity/activity-player-list/activ
 import {EditFeesComponent} from './fees/edit-fees/edit-fees.component';
 import {FeesService} from './fees/fees-service.service';
 import { CoachPageComponent } from './coach/coach-page/coach-page.component';
+import {HttpAuthClient} from './auth/http-auth-client';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { CoachPageComponent } from './coach/coach-page/coach-page.component';
     CoachService,
     LoadingService,
     ActivityService,
-    FeesService],
+    FeesService,
+    HttpAuthClient],
   bootstrap: [AppComponent]
 })
 export class AppModule {

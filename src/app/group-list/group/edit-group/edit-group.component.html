@@ -57,7 +57,7 @@
               <div class="list-group" formArrayName="Activities">
                 <div
                   class="row"
-                  *ngFor="let activity of editForm.get('Activities').controls; let i = index"
+                  *ngFor="let activity of getControls('Activities'); let i = index"
                   [formGroupName]="i"
                   style="margin-top: 10px;">
                   <input
@@ -136,7 +136,7 @@
             <div class="list-group" formArrayName="GroupPlayers">
               <div
                 class="row"
-                *ngFor="let player of editForm.get('GroupPlayers').controls; let i = index"
+                *ngFor="let player of getControls('GroupPlayers'); let i = index"
                 [formGroupName]="i"
                 style="margin-top: 10px;">
                 <!--Hidden-->
@@ -201,7 +201,7 @@
               <div class="list-group" formArrayName="Coaching">
                 <div
                   class="row"
-                  *ngFor="let coach of editForm.get('Coaching').controls; let i = index"
+                  *ngFor="let coach of getControls('Coaching'); let i = index"
                   [formGroupName]="i"
                   style="margin-top: 10px;">
                   <!--Hidden-->

@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
     console.log(e);
     this.auth.tryLogIn(email, e.toString()).subscribe(
       (data) => {
-       this.auth.onLoginCoach(data);
-       this.router.navigate(['']);
+       this.auth.onLoginCoach(data, () => this.router.navigate(['']));
       },
       (error) => {
         this.errorLogin = true;

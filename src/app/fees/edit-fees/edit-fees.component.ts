@@ -16,7 +16,7 @@ import {HttpHelper} from '../../shared/http-helper';
 })
 export class EditFeesComponent implements OnInit, OnDestroy {
 
-  private feeForm: FormGroup;
+  public feeForm: FormGroup;
   @Input() fee: Fee;
 
   private id: number;

@@ -16,7 +16,7 @@ import {AddActivityComponent} from 'app/activity/add-activity/add-activity.compo
 })
 export class EditActivityComponent implements OnInit, OnDestroy {
 
-  private activity: Activity = new Activity(0, 1, '', null, null);
+  public activity: Activity = new Activity(0, 1, '', null, null);
   subRefresh: Subscription;
   editMode = false;
   id: number;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Response} from '@angular/http';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
 import {Player} from '../model/player.model';
@@ -7,6 +7,7 @@ import {Observer} from 'rxjs/Observer';
 import {Values} from 'app/shared/static/values';
 import {isNullOrUndefined} from 'util';
 import {HttpHelper} from '../shared/http-helper';
+import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class PlayerService {
@@ -14,7 +15,7 @@ export class PlayerService {
   players: Player[];
 
 
-  constructor(private http: Http) {
+  constructor(private http: HttpAuthClient) {
   }
 
   // http://localhost:51194
@@ -74,7 +75,7 @@ export class PlayerService {
   }
 
   fetchPlayerFees(id: number) {
-    return this.http.get(Values.url + '/player/getfees/' + id).map(
+    return this.http.get(Values.url + '/fee/getfeesforplayer/' + id).map(
       (response: Response) => {
         return response.json();
       }

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import {Http, Response} from '@angular/http';
+import { Response} from '@angular/http';
 import {Fee} from '../model/fee.model';
 import {Values} from 'app/shared/static/values';
 import {HttpHelper} from '../shared/http-helper';
+import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class FeesService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpAuthClient) { }
 
   createFee(fee: Fee) {
     return this.http.post(Values.url + '/fee/create/', fee).map(

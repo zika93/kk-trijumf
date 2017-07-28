@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Response} from '@angular/http';
 import {Values} from '../shared/static/values';
 import {HttpHelper} from '../shared/http-helper';
 import {Activity} from '../model/activity.model';
+import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class ActivityService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpAuthClient) {
   }
 
   fetchActivity(id: number) {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Activity} from '../../model/activity.model';
 import {Subscription} from 'rxjs/Subscription';
@@ -11,14 +11,14 @@ import {isNullOrUndefined} from 'util';
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css']
 })
-export class ActivityComponent implements OnInit {
+export class ActivityComponent implements OnInit, OnDestroy {
 
-  private activity: Activity = new Activity(null, null, null, null, null);
+  public activity: Activity = new Activity(null, null, null, null, null);
   private sub: Subscription;
   private id: number;
 
-  private players: Player[];
-  private checked: boolean[];
+  public players: Player[];
+  public checked: boolean[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -29,29 +29,39 @@ export class ActivityComponent implements OnInit {
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.sub = this.service.fetchActivity(this.id).subscribe(
-          (activity: Activity) => {
-            console.log(activity);
-            this.activity = activity;
-            this.service.fetchPlayerActivity(this.id).subscribe(
-              (playersActivity: any[]) => {
-                this.players = [];
-                this.checked = new Array<boolean>();
-                for (const pa of playersActivity) {
-                  this.players.push(new Player([], [], [],
-                    pa.PlayerId, pa.PlayerName, pa.PlayerMiddleName, pa.PlayerSurname,
-                    null, null, null, null, null, null, null, null, pa.PlayerThumbnail));
-                  this.checked.push(pa.Active === 1);
-                }
+        this.onRefresh();
+      }
+    );
+  }
 
-              }
-            );
+  ngOnDestroy() {
+    if (!isNullOrUndefined(this.sub)) {
+      this.sub.unsubscribe();
+    }
+  }
+
+  onRefresh() {
+    this.ngOnDestroy();
+    this.sub = this.service.fetchActivity(this.id).subscribe(
+      (activity: Activity) => {
+        console.log(activity);
+        this.activity = activity;
+        this.service.fetchPlayerActivity(this.id).subscribe(
+          (playersActivity: any[]) => {
+            this.players = [];
+            this.checked = new Array<boolean>();
+            for (const pa of playersActivity) {
+              this.players.push(new Player([], [], [],
+                pa.PlayerId, pa.PlayerName, pa.PlayerMiddleName, pa.PlayerSurname,
+                null, null, null, null, null, null, null, null, pa.PlayerThumbnail));
+              this.checked.push(pa.Active === 1);
+            }
+
           }
         );
       }
     );
   }
-
   onEdit() {
     this.router.navigate(['edit'], {relativeTo: this.route});
   }

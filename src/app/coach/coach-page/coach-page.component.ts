@@ -9,7 +9,7 @@ import {Coach} from '../../model/coach.model';
   styleUrls: ['./coach-page.component.css']
 })
 export class CoachPageComponent implements OnInit {
-  private coach: Coach;
+  public coach: Coach;
 
   constructor(private service: CoachService) { }
 

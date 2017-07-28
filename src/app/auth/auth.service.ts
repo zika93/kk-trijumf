@@ -16,17 +16,20 @@ export class AuthService {
     Cookie.set('user', user, 0.1);
   }
 
-  onLoginCoach(coach: any) {
+  onLoginCoach(coach: any, callback: () => any) {
     this.isLoggedIn = true;
     Cookie.set('user', coach.Username, 0.2);
     Cookie.set('id', coach.Id, 0.2);
     Cookie.set('auth', coach.AuthToken, 0.2);
+    callback();
   }
 
 
   onLogout() {
     this.isLoggedIn = false;
     Cookie.delete('user');
+    Cookie.delete('id');
+    Cookie.delete('auth');
   }
 
  isLoggedin() {

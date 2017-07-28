@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {Values} from '../shared/static/values';
@@ -7,12 +7,13 @@ import 'rxjs/Rx';
 import {Group} from '../model/group.model';
 import {isNullOrUndefined} from 'util';
 import {HttpHelper} from '../shared/http-helper';
+import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class GroupService {
   groups: Group[];
 
-  constructor(private http: Http) {
+  constructor(private http: HttpAuthClient) {
   }
 
   getAll() {
@@ -26,15 +27,15 @@ export class GroupService {
     }
   }
 
-  addToGroup(id: number, playersId: number[]) {
-    console.log('adding players to group');
-    return this.http.post(Values.url + '/group/add', id, playersId).map(
-      (response: Response) => {
-        console.log(response);
-        return response.json();
-      }
-    ).catch(HttpHelper.handleErrorObservable);
-  }
+  // addToGroup(id: number, playersId: number[]) {
+  //   console.log('adding players to group');
+  //   return this.http.post(Values.url + '/group/add', id, playersId).map(
+  //     (response: Response) => {
+  //       console.log(response);
+  //       return response.json();
+  //     }
+  //   ).catch(HttpHelper.handleErrorObservable);
+  // }
 
   fetchAllGroups() {
     console.log('fetching!');
@@ -81,13 +82,15 @@ export class GroupService {
 
   changeGroup(group: Group) {
     console.warn(group);
-    if (isNullOrUndefined(this.groups))
+    if (isNullOrUndefined(this.groups)) {
       this.groups = [];
+    }
     const objIndex = this.groups.findIndex((obj => obj.Id === group.Id));
-    if (objIndex !== -1)
+    if (objIndex !== -1) {
       this.groups[objIndex] = group;
-    else
+    } else {
       this.groups.push(group);
+    }
   }
 
   updateGroup(group: Group) {
