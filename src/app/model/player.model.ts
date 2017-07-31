@@ -12,6 +12,8 @@ export class Player {
               public Name: string,
               public MiddleName: string,
               public Surname: string,
+              public Description: string,
+              public Since: Date,
               public Birthday: Date,
               public Medical: Date,
               public Height: number,
@@ -23,8 +25,9 @@ export class Player {
               public Thumbnail: string) {
   }
 
-  public getThumbnail(): string {
-  return isNullOrUndefined(this.Thumbnail) ? this.Thumbnail : Values.userImage;
-}
+//   public getThumbnail(): string {
+//   return !isNullOrUndefined(this.Thumbnail) ? this.Thumbnail : Values.userImage;
+// }
+
 
 }

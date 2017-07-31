@@ -13,10 +13,12 @@ export class AuthService {
 
   onLogin(user: string) {
     this.isLoggedIn = true;
+    Cookie.deleteAll();
     Cookie.set('user', user, 0.1);
   }
 
   onLoginCoach(coach: any, callback: () => any) {
+    this.onLogout();
     this.isLoggedIn = true;
     Cookie.set('user', coach.Username, 0.2);
     Cookie.set('id', coach.Id, 0.2);
@@ -30,6 +32,7 @@ export class AuthService {
     Cookie.delete('user');
     Cookie.delete('id');
     Cookie.delete('auth');
+    Cookie.deleteAll();
   }
 
  isLoggedin() {

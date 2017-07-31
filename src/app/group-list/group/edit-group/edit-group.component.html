@@ -10,15 +10,15 @@
         <div class="panel-body">
           <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1">
             <div class="row">
-              <div class="col-xs-12 col-sm-4 center-block">
-                <div class="row">
-                  <button class="btn btn-success" [disabled]="!editForm.valid" type="submit">Save</button>
-                  <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
-                  <button *ngIf="editMode" type="button" class="btn btn-default" (click)="onRefresh()">
-                    <span class="glyphicon glyphicon-refresh"></span> Refresh
-                  </button>
-                </div>
-              </div>
+              <!--<div class="col-xs-12 col-sm-4 center-block">-->
+                <!--<div class="row">-->
+                  <!--<button class="btn btn-success" [disabled]="!editForm.valid" type="submit">Save</button>-->
+                  <!--<button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>-->
+                  <!--&lt;!&ndash;<button *ngIf="editMode" type="button" class="btn btn-default" (click)="onRefresh()">&ndash;&gt;-->
+                    <!--<span class="glyphicon glyphicon-refresh"></span> Refresh-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
 
               <div class="col-xs-12 col-sm-8">
                 <label for="Name">Name:</label>
@@ -259,7 +259,11 @@
         </div>
       </div>
 
-
+      <div class="row">
+        <button class="btn btn-success" [disabled]="!editForm.valid" type="submit">Save</button>
+        <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+      </div>
+      <br>
   </form>
 </div>
 

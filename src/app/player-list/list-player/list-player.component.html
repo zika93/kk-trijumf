@@ -1,0 +1,20 @@
+<ul class="list-group">
+  <li appCursorPointer [routerLink]="['/','players',pl.Id]" class="list-group-item" appHover="list-group-item-info"
+      *ngFor="let pl of players; let i = index">
+
+
+    <img *ngIf="(pl.Thumbnail !== null) && (pl.Thumbnail !== '');else defpic" src={{pl.Thumbnail}}
+         style="max-height: 32px;max-width: 32px;">
+    <ng-template #defpic>
+      <img src="../../assets/img/user.svg" style="max-height: 32px;max-width: 32px;">
+    </ng-template>
+    {{pl.Name}} {{pl.Surname}}
+    <span *ngIf="checkPlayerMedical(i)" class="pull-right glyphicon" style="margin-left: 8px">
+          <img src="../../assets/img/hospital.png">
+        </span>
+    <span *ngIf="checkPlayerFees(i)" class="pull-right glyphicon">
+          <img src="../../assets/img/money.png">
+        </span>
+
+  </li>
+</ul>

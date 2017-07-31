@@ -1,8 +1,11 @@
 <app-heading-nav></app-heading-nav>
 <div class="container">
-  <div class="loading-overlay" *ngIf="loading">
-    <!-- show something fancy here, here with Angular 2 Material's loading bar or circle -->
-    <div class="loader">Loading...</div>
-  </div>
-  <router-outlet *ngIf="!loading"></router-outlet>
+  <!--<div class="loading-overlay" *ngIf="showLoading()">-->
+    <!--&lt;!&ndash; show something fancy here, here with Angular 2 Material's loading bar or circle &ndash;&gt;-->
+    <!--<div class="loader">Loading...</div>-->
+  <!--</div>-->
+  <!--<router-outlet *ngIf="!showLoading()"></router-outlet>-->
+  <!--<app-loader [busy]="loading">-->
+    <router-outlet></router-outlet>
+  <!--</app-loader>-->
 </div>

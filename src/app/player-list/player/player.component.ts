@@ -19,8 +19,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
 
+  monthList = Values.months;
   player: Player = new Player(
-    [], [], [], null, '', '', '', null, null, null, null, null, '', '', '', '');
+    [], [], [], null, '', '', '', null, null, null, null, null, null, null, '', '', '', '');
   // new Player([], [], [], [], null, '', '', '', null, null, null, null);
   id: number;
   imgUrl = Values.userImage;
@@ -127,4 +128,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
     );
   }
 
+  latestFee() {
+    const latestFee = Math.max.apply(Math, this.player.Fees.map(function (o) {
+        return o.Month;
+      })
+    );
+    return latestFee % 100;
+  }
+
+  getFeeMonth (feeMonth: number) {
+    return this.monthList[(feeMonth % 100) - 1];
+  }
 }

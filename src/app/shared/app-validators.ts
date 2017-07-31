@@ -8,7 +8,7 @@ export class AppValidators {
     if (isNullOrUndefined(control.value)) {
       return null;
     }
-    if (control.value.length !== 10 || !control.value.toString().match(Values.dateMatch)) {
+    if ((control.value.length !== 10 && control.value.length !== 11) || !control.value.toString().match(Values.dateMatch)) {
       return {'wrongFormattedDate': true};
     }
     return null;
@@ -18,7 +18,7 @@ export class AppValidators {
     if (isNullOrUndefined(control.value)) {
       return null;
     }
-    if (control.value.length !== 16 || !control.value.toString().match(Values.dateTimeMatch)) {
+    if ((control.value.length !== 16 && control.value.length !== 17) || !control.value.toString().match(Values.dateTimeMatch)) {
       return {'wrongFormattedDateTime': true};
     }
     return null;

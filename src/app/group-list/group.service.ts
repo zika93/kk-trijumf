@@ -11,21 +11,21 @@ import {HttpAuthClient} from '../auth/http-auth-client';
 
 @Injectable()
 export class GroupService {
-  groups: Group[];
+  // groups: Group[];
 
   constructor(private http: HttpAuthClient) {
   }
 
-  getAll() {
-    if (isNullOrUndefined(this.groups) || this.groups.length === 0) {
-      console.log('returning fetched!');
-      return this.fetchAllGroups();
-    } else {
-      return Observable.create((observer: Observer<any[]>) => {
-        observer.next(this.groups);
-      });
-    }
-  }
+  // getAll() {
+  //   if (isNullOrUndefined(this.groups) || this.groups.length === 0) {
+  //     console.log('returning fetched!');
+  //     return this.fetchAllGroups();
+  //   } else {
+  //     return Observable.create((observer: Observer<any[]>) => {
+  //       observer.next(this.groups);
+  //     });
+  //   }
+  // }
 
   // addToGroup(id: number, playersId: number[]) {
   //   console.log('adding players to group');
@@ -41,57 +41,57 @@ export class GroupService {
     console.log('fetching!');
     return this.http.get(Values.url + '/group/getall').map(
       (response: Response) => {
-        this.groups = response.json();
+        // this.groups = response.json();
         return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);
   }
 
-  getGroup(id: number) {
-    if (this.groups == null || this.groups.length === 0) {
-      return this.fetchGroup(id);
-    }
-    const group = this.groups.filter(x =>
-      x.Id === id
-    );
-    if (group[0]['Activities']) {
-      for (const activity of group[0].Activities) {
-        console.log(activity.Date);
-        activity.Date = new Date(activity.Date);
-        console.log(activity.Date);
-      }
-    }
-    if (group != null && group.length > 0) {
-      return Observable.create((observer: Observer<Group>) => {
-        observer.next(group[0]);
-      });
-    } else {
-      return this.fetchGroup(id);
-    }
-  }
+  // getGroup(id: number) {
+  //   if (this.groups == null || this.groups.length === 0) {
+  //     return this.fetchGroup(id);
+  //   }
+  //   const group = this.groups.filter(x =>
+  //     x.Id === id
+  //   );
+  //   if (group[0]['Activities']) {
+  //     for (const activity of group[0].Activities) {
+  //       console.log(activity.Date);
+  //       activity.Date = new Date(activity.Date);
+  //       console.log(activity.Date);
+  //     }
+  //   }
+  //   if (group != null && group.length > 0) {
+  //     return Observable.create((observer: Observer<Group>) => {
+  //       observer.next(group[0]);
+  //     });
+  //   } else {
+  //     return this.fetchGroup(id);
+  //   }
+  // }
 
   fetchGroup(id: number) {
     return this.http.get(Values.url + '/group/getgroup/' + id).map(
       (response: Response) => {
         const group: Group = response.json();
-        this.changeGroup(group);
+        // this.changeGroup(group);
         return group;
       }
     ).catch(HttpHelper.handleErrorObservable);
   }
 
-  changeGroup(group: Group) {
-    console.warn(group);
-    if (isNullOrUndefined(this.groups)) {
-      this.groups = [];
-    }
-    const objIndex = this.groups.findIndex((obj => obj.Id === group.Id));
-    if (objIndex !== -1) {
-      this.groups[objIndex] = group;
-    } else {
-      this.groups.push(group);
-    }
-  }
+  // changeGroup(group: Group) {
+  //   console.warn(group);
+  //   if (isNullOrUndefined(this.groups)) {
+  //     this.groups = [];
+  //   }
+  //   const objIndex = this.groups.findIndex((obj => obj.Id === group.Id));
+  //   if (objIndex !== -1) {
+  //     this.groups[objIndex] = group;
+  //   } else {
+  //     this.groups.push(group);
+  //   }
+  // }
 
   updateGroup(group: Group) {
     return this.http.post(Values.url + '/group/update/', group).map(HttpHelper.extractData)

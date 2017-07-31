@@ -11,6 +11,7 @@ export class ActivityPlayerListComponent implements OnInit {
   @Input() players: Player[];
   @Input() checked: boolean[];
   @Input() submit: Function;
+  @Input() submitMessage: string;
 
   constructor() { }
 

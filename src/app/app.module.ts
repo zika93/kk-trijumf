@@ -43,6 +43,10 @@ import {EditFeesComponent} from './fees/edit-fees/edit-fees.component';
 import {FeesService} from './fees/fees-service.service';
 import { CoachPageComponent } from './coach/coach-page/coach-page.component';
 import {HttpAuthClient} from './auth/http-auth-client';
+import {CanDeactivateGuard} from './shared/can-component-deactivate';
+import { LoaderComponent } from './loader/loader/loader.component';
+import { CoachEditComponent } from './coach/coach-edit/coach-edit.component';
+import { ListPlayerComponent } from './player-list/list-player/list-player.component';
 
 
 @NgModule({
@@ -74,7 +78,10 @@ import {HttpAuthClient} from './auth/http-auth-client';
     AddActivityComponent,
     ActivityPlayerListComponent,
     EditFeesComponent,
-    CoachPageComponent
+    CoachPageComponent,
+    LoaderComponent,
+    CoachEditComponent,
+    ListPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +100,8 @@ import {HttpAuthClient} from './auth/http-auth-client';
     LoadingService,
     ActivityService,
     FeesService,
-    HttpAuthClient],
+    HttpAuthClient,
+    CanDeactivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

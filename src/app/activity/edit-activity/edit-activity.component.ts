@@ -7,6 +7,8 @@ import {isNullOrUndefined} from 'util';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Activity} from '../../model/activity.model';
 import {AddActivityComponent} from 'app/activity/add-activity/add-activity.component';
+import {CanComponentDeactivate} from "app/shared/can-component-deactivate";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -14,7 +16,7 @@ import {AddActivityComponent} from 'app/activity/add-activity/add-activity.compo
   templateUrl: './edit-activity.component.html',
   styleUrls: ['./edit-activity.component.css']
 })
-export class EditActivityComponent implements OnInit, OnDestroy {
+export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
   public activity: Activity = new Activity(0, 1, '', null, null);
   subRefresh: Subscription;
@@ -78,5 +80,9 @@ export class EditActivityComponent implements OnInit, OnDestroy {
 
   saveButton() {
     return this.editMode ? 'Update activity' : 'Add activity';
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+      return true;
   }
 }

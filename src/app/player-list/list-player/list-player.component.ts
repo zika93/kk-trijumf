@@ -1,46 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PlayerService} from './player.service';
-import {Player} from '../model/player.model';
-import {Subscription} from 'rxjs/Subscription';
+import {Component, Input, OnInit} from '@angular/core';
+import {Player} from '../../model/player.model';
 import {isNullOrUndefined} from 'util';
-import {Values} from '../shared/static/values';
-import {LoadingService} from '../shared/loading.service';
+import {Values} from '../../shared/static/values';
 
 @Component({
-  selector: 'app-player-list',
-  templateUrl: './player-list.component.html',
-  styleUrls: ['./player-list.component.css']
+  selector: 'app-list-player',
+  templateUrl: './list-player.component.html',
+  styleUrls: ['./list-player.component.css']
 })
-export class PlayerListComponent implements OnInit, OnDestroy {
-  players: Player[];
+export class ListPlayerComponent implements OnInit {
 
-  subPlayers: Subscription;
-  constructor(private service: PlayerService, private loader: LoadingService) {
-  }
+  @Input()  players: Player[];
 
-  onRefresh() {
-    this.ngOnDestroy();
-    this.subPlayers = this.service.fetchAllPlayers().subscribe(
-      (players: Player[]) => {
-        console.log(players);
-        this.players = players;
-      }
-    );
-  }
+  constructor() { }
 
   ngOnInit() {
-    this.subPlayers = this.service.fetchAllPlayers().subscribe(
-      (players: Player[]) => {
-        console.log(players);
-        this.players = players;
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    if (!isNullOrUndefined(this.subPlayers)) {
-      this.subPlayers.unsubscribe();
-    }
   }
 
   checkPlayerMedical(index: number) {
@@ -84,4 +58,5 @@ export class PlayerListComponent implements OnInit, OnDestroy {
       return date > since;
     }
   }
+
 }

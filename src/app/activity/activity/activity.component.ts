@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivityService} from '../activity.service';
 import {Player} from '../../model/player.model';
 import {isNullOrUndefined} from 'util';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-activity',
@@ -16,13 +17,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
   public activity: Activity = new Activity(null, null, null, null, null);
   private sub: Subscription;
   private id: number;
-
+  private message: string;
   public players: Player[];
   public checked: boolean[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private service: ActivityService) {
+              private service: ActivityService,
+              private datepipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
             for (const pa of playersActivity) {
               this.players.push(new Player([], [], [],
                 pa.PlayerId, pa.PlayerName, pa.PlayerMiddleName, pa.PlayerSurname,
-                null, null, null, null, null, null, null, null, pa.PlayerThumbnail));
+                null, null, null, null, null, null, null, null, null, null, pa.PlayerThumbnail));
               this.checked.push(pa.Active === 1);
             }
 
@@ -95,7 +97,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
         Value: this.checked[i]
       });
     }
-    this.service.submitPlayerActivity(this.id, list).subscribe((data) => console.log(data));
+    this.service.submitPlayerActivity(this.id, list).subscribe((data) => {
+      this.message = 'Submitted on ' + this.datepipe.transform(new Date(), 'HH:mm');
+    });
   }
 
   isStarted() {

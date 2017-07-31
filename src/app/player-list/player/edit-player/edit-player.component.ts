@@ -12,6 +12,7 @@ import {isNullOrUndefined} from 'util';
 import {GroupService} from '../../../group-list/group.service';
 import {Group} from '../../../model/group.model';
 import {AppValidators} from '../../../shared/app-validators';
+import {Fee} from '../../../model/fee.model';
 
 @Component({
   selector: 'app-edit-player',
@@ -45,8 +46,11 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       'Name': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'MiddleName': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'Surname': new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      'Description': new FormControl('', Validators.maxLength(500)),
       'Birthday': new FormControl(null, AppValidators.dateValidator),
-      'Medical': new FormControl(null),
+      'Medical': new FormControl(null, AppValidators.dateValidator),
+      'Since': new FormControl(this.datepipe.transform(new Date(), 'dd/MM/yyyy'),
+        [Validators.required, AppValidators.dateValidator]),
       'SportsmanId': new FormControl(''),
       'PhoneNumber1': new FormControl(''),
       'PhoneNumber2': new FormControl(''),
@@ -54,8 +58,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       'Height': new FormControl(0),
       'Fees': new FormArray([]),
       'Groups': new FormArray([]),
-      'Picture': new FormControl(''),
-      'Activities': new FormArray([])
+      'Picture': new FormControl('')
+      // ,
+      // 'Activities': new FormArray([])
     });
 
     this.subGroups = this.serviceGroup.fetchAllGroups().subscribe(
@@ -74,6 +79,9 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
     }
     if (!isNullOrUndefined(data.Medical) && data.Medical !== '') {
       data.Medical = new Date(DateHelper.parseStringToDate(data.Medical));
+    }
+    if (!isNullOrUndefined(data.Since) && data.Since !== '') {
+      data.Since = new Date(DateHelper.parseStringToDate(data.Since));
     }
     for (const fee of data.Fees) {
       fee.Date = new Date(DateHelper.parseStringToDate(fee.Date));
@@ -99,22 +107,33 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
-    this.subPlayers = this.service.getPlayer(this.id).subscribe(
+    this.subPlayers = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
         console.log('onRefresh:');
-        console.log(player);
+        this.editForm.reset();
         const copy = Object.assign({}, player);
         const data: any = copy;
+        console.log(data);
         const id = data.Id;
         delete data.Id;
         delete data.Thumbnail;
         if (!isNullOrUndefined(data.Picture)) {
           this.pic = data.Picture;
         }
-        data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
-        data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
-
+        // data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
+        // data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
+        // data.Since = this.datepipe.transform(data.Since, 'dd/MM/yyyy');
+        if (!isNullOrUndefined(data.Birthday) && data.Birthday !== '') {
+          data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
+        }
+        if (!isNullOrUndefined(data.Medical) && data.Medical !== '') {
+          data.Medical = this.datepipe.transform(data.Medical, 'dd/MM/yyyy');
+        }
+        if (!isNullOrUndefined(data.Since) && data.Since !== '') {
+          data.Since = this.datepipe.transform(data.Since, 'dd/MM/yyyy');
+        }
         if (data['Groups']) {
+          (<FormArray>this.editForm.get('Groups')).reset();
           for (const group of data.Groups) {
             (<FormArray>this.editForm.get('Groups')).push(
               new FormGroup({
@@ -130,6 +149,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         }
         if (data['Fees']) {
           for (const fee of data.Fees) {
+            (<FormArray>this.editForm.get('Fees')).reset();
             fee.Date = this.datepipe.transform(new Date(fee.Date), 'dd/MM/yyyy');
             (<FormArray>this.editForm.get('Fees')).push(
               new FormGroup({
@@ -137,15 +157,16 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
                 'Date': new FormControl(fee.Date,
                   [Validators.required, AppValidators.dateValidator]),
                 'PlayerId': new FormControl(fee.PlayerId, Validators.required),
-                'Fee': new FormControl(fee.Fee, Validators.required)
+                'Fee': new FormControl(fee.Fee, Validators.required),
+                'Month': new FormControl(fee.Month, Validators.required)
               })
             );
           }
         }
-        delete data.Activities;
         console.warn(data);
 
-        this.editForm.patchValue(data);
+        delete data.Activities;
+        this.editForm.setValue(data);
         data.Id = id;
       }
     );
@@ -216,5 +237,13 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
   onDeleteItem(name: string, index: number) {
     (<FormArray>this.editForm.get(name)).removeAt(index);
+  }
+
+  getFeeMonth(fee: FormGroup) {
+    return Values.months[(fee.value.Month % 100) - 1];
+  }
+
+  getFeeYear(fee: FormGroup) {
+    return fee.value.Month.toString().substr(0,4);
   }
 }

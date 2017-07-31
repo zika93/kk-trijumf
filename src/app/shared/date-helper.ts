@@ -8,7 +8,7 @@ export class DateHelper {
     }
     if (typeof str === 'string'
       &&
-      str.length === 10 &&
+      (str.length === 10 || str.length === 11) &&
       ( str.match(Values.dateMatch) )) {
 
       const
@@ -17,7 +17,9 @@ export class DateHelper {
         month = str.substring(3, 5);
       const
         year = str.substring(6, 10);
-      return this.fixOffset(new Date(year + '-' + month + '-' + day));
+      const date = new Date(year + '-' + month + '-' + day);
+      date.setHours(10);
+      return this.fixOffset(date);
     }
     return null;
   }
@@ -28,11 +30,14 @@ export class DateHelper {
     }
     if (typeof str === 'string'
       &&
-      str.length === 16
+      (str.length === 16 || str.length === 17)
       &&
       ( str.match(Values.dateTimeMatch) )
     ) {
-
+      let adder = 0;
+      if (str.length === 17) {
+        adder = adder + 1;
+      }
       const
         day = str.substring(0, 2);
       const
@@ -40,9 +45,9 @@ export class DateHelper {
       const
         year = str.substring(6, 10);
       const
-        hour = str.substring(11, 13);
+        hour = str.substring(11 + adder, 13 + adder);
       const
-        min = str.substring(14, 16);
+        min = str.substring(14 + adder, 16 + adder);
       const date = new Date(year + '-' + month + '-' + day);
       date.setHours(+hour);
       date.setMinutes(+min);

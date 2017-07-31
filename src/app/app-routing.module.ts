@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {GroupListComponent} from './group-list/group-list.component';
-import {UpcomingComponent} from './upcoming/upcoming.component';
 import {PlayerListComponent} from './player-list/player-list.component';
 import {LoginComponent} from './auth/login/login.component';
 import {BaseComponent} from './base/base.component';
@@ -16,6 +15,7 @@ import {HomeComponent} from './home/home.component';
 import {ActivityComponent} from './activity/activity/activity.component';
 import {EditActivityComponent} from './activity/edit-activity/edit-activity.component';
 import {CoachPageComponent} from './coach/coach-page/coach-page.component';
+import {CoachEditComponent} from './coach/coach-edit/coach-edit.component';
 
 
 const appRoutes: Routes = [
@@ -24,15 +24,16 @@ const appRoutes: Routes = [
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'groups', component: GroupListComponent },
       { path: 'groups/new', component: EditGroupComponent },
-      { path: 'groups/:id/edit', component: EditGroupComponent },
+      { path: 'groups/:id/edit', component: EditGroupComponent }, // , canDeactivate: [CanDeactivateGuard]
       { path: 'groups/:id', component: GroupComponent },
       { path: 'activity/:id/edit', component: EditActivityComponent },
       { path: 'activity/:id', component: ActivityComponent },
       { path: 'players', component: PlayerListComponent },
-      { path: 'players/new', component: PlayerEditComponent },
+      { path: 'players/new', component: PlayerEditComponent  },
       { path: 'players/:id/edit', component: PlayerEditComponent },
       { path: 'players/:id', component: PlayerComponent },
       { path: 'profile', component: CoachPageComponent},
+      { path: 'profile/edit', component: CoachEditComponent},
       { path: 'error', component: ErrorPageComponent },
 
   ],

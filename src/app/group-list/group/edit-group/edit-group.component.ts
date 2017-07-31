@@ -4,7 +4,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {GroupService} from '../../group.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Group} from 'app/model/group.model';
-import {Activity} from '../../../model/activity.model';
 import {DateHelper} from '../../../shared/date-helper';
 import {DatePipe} from '@angular/common';
 import {CoachService} from '../../../coach/coach.service';
@@ -52,7 +51,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
     this.subCoach = this.serviceC.getActivityTypes().subscribe((data: any[]) => {
       this.activityTypes = data;
     });
-    this.subPlayers = this.servicePlayers.getAll().subscribe((data: any[]) => {
+    this.subPlayers = this.servicePlayers.fetchAllPlayers().subscribe((data: any[]) => {
       this.players = data;
     });
     this.subCoaches = this.serviceC.getCoaches().subscribe((data: any[]) => {
@@ -85,6 +84,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       (group: Group) => {
         console.log('onRefresh:');
         console.log(group);
+        this.editForm.reset();
         const copy = Object.assign({}, group);
         const data: any = copy;
         const id = data.Id;

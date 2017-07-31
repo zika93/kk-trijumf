@@ -1,3 +1,9 @@
 li{
   min-height: 54px;
 }
+
+.medic{
+  background-color: red;
+  text-align:center;
+  color: white;
+}
