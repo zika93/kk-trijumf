@@ -32,7 +32,7 @@ export class PlayerService {
   // }
 
   fetchAllPlayers() {
-    console.log('fetching!');
+    // console.log('fetching!');
     return this.http.get(Values.url + '/player/getall').map(
       (response: Response) => {
         // console.log(response.json());
@@ -98,6 +98,11 @@ export class PlayerService {
 
   fetchPlayerGroups(id: number) {
     return this.http.get(Values.url + '/player/getgroups/' + id).map(HttpHelper.extractData)
+      .catch(HttpHelper.handleErrorObservable);
+  }
+
+  deletePlayer(id: number) {
+    return this.http.get(Values.url + '/player/delete/' + id).map(HttpHelper.extractData)
       .catch(HttpHelper.handleErrorObservable);
   }
 

@@ -7,8 +7,8 @@ import {isNullOrUndefined} from 'util';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Activity} from '../../model/activity.model';
 import {AddActivityComponent} from 'app/activity/add-activity/add-activity.component';
-import {CanComponentDeactivate} from "app/shared/can-component-deactivate";
-import {Observable} from "rxjs/Observable";
+import {CanComponentDeactivate} from 'app/shared/can-component-deactivate';
+import {Observable} from 'rxjs/Observable';
 
 
 @Component({
@@ -50,7 +50,7 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
   onRefresh() {
     this.subRefresh = this.service.fetchActivity(this.id).subscribe(
       (activity: any) => {
-        console.warn(activity);
+        // console.warn(activity);
         this.activity = activity;
         this.child.onRefresh(this.activity);
       });
@@ -59,7 +59,7 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
   onSubmit() {
     this.activity.Date = new Date(DateHelper.parseStringToDateTime( this.activity.Date));
     this.activity.GroupId = this.id;
-    console.log( this.activity);
+    // console.log( this.activity);
     if (this.editMode) {
       this.activity.Id = this.id;
       this.service.updateActivity(this.activity).subscribe(res => {

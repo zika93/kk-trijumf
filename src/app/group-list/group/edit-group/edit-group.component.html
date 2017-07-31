@@ -261,7 +261,8 @@
 
       <div class="row">
         <button class="btn btn-success" [disabled]="!editForm.valid" type="submit">Save</button>
-        <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-default" type="button" (click)="onCancel()">Cancel</button>
+        <button *ngIf="editMode" class="btn btn-danger pull-right" type="button" (click)="onDelete()">Delete</button>
       </div>
       <br>
   </form>

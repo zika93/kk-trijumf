@@ -75,7 +75,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   onSubmit() {
     const activity = this.activityForm.value;
     activity.Date = new Date(DateHelper.parseStringToDateTime(activity.Date));
-    console.log(activity);
+    // console.log(activity);
     this.sub = this.service.createActivity(activity).subscribe(res =>
         this.submitClick()
       ,

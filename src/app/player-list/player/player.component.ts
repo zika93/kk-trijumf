@@ -58,7 +58,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.id = +param['id'];
         this.sub = this.service.fetchPlayer(this.id).subscribe(
           (player: Player) => {
-            console.log(player);
+            // console.log(player);
             player.Birthday = new Date(player.Birthday);
             this.player = player;
             if (this.player.Picture !== null) {
@@ -85,7 +85,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     // this.loader.loading.next(LoadingService.START_LOADING);
     this.sub = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
-        console.log(player);
+        // console.log(player);
         player.Birthday = new Date(player.Birthday);
         this.player = player;
         if (this.player.Picture !== null) {
@@ -109,7 +109,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   refreshFee() {
-    console.log('refresh feeee');
+    // console.log('refresh feeee');
     this.service.fetchPlayerFees(this.id).subscribe(
       (param: Params) => {
         this.player.Fees = <Fee[]>param;
@@ -122,7 +122,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     // players/getgroups/{playerId}
     this.service.fetchPlayerGroups(this.id).subscribe(
       (param: Params) => {
-        console.log(param);
+        // console.log(param);
         this.player.Groups = <Group[]>param;
       }
     );

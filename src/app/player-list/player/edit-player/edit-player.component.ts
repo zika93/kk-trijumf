@@ -41,7 +41,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    console.log('initForm:');
+    // console.log('initForm:');
     this.editForm = new FormGroup({
       'Name': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'MiddleName': new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -65,14 +65,14 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
     this.subGroups = this.serviceGroup.fetchAllGroups().subscribe(
       (groups: any[]) => {
-        console.log(groups);
+        // console.log(groups);
         this.allGroups = groups;
       }
     );
   }
 
   onSubmit() {
-    console.log(this.editForm);
+    // console.log(this.editForm);
     const data = this.editForm.value;
     if (!isNullOrUndefined(data.Birthday) && data.Birthday !== '') {
       data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
@@ -87,7 +87,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       fee.Date = new Date(DateHelper.parseStringToDate(fee.Date));
       fee.Date.setHours(10);
     }
-    console.log(data);
+    // console.log(data);
     if (this.editMode) {
       data.Id = this.id;
       this.service.updatePlayer(data).subscribe(res => {
@@ -109,11 +109,11 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.subPlayers = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
-        console.log('onRefresh:');
+        // console.log('onRefresh:');
         this.editForm.reset();
         const copy = Object.assign({}, player);
         const data: any = copy;
-        console.log(data);
+        // console.log(data);
         const id = data.Id;
         delete data.Id;
         delete data.Thumbnail;
@@ -163,7 +163,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
             );
           }
         }
-        console.warn(data);
+        // console.warn(data);
 
         delete data.Activities;
         this.editForm.setValue(data);
@@ -173,7 +173,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('ngOnInit:');
+    // console.log('ngOnInit:');
     this.initForm();
     this.route.params.subscribe(
       (param: Params) => {
@@ -213,7 +213,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
   encodeImageFileAsURL(e) {
 
-    console.warn('encodeImageFileAsURL:');
+    // console.warn('encodeImageFileAsURL:');
     const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = this.changeImage.bind(this);
@@ -244,6 +244,12 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   getFeeYear(fee: FormGroup) {
-    return fee.value.Month.toString().substr(0,4);
+    return fee.value.Month.toString().substr(0, 4);
+  }
+
+  onDelete() {
+    if (confirm('Are you sure?')) {
+      this.service.deletePlayer(this.id).subscribe( (data) => this.router.navigate(['/', 'players']));
+    }
   }
 }

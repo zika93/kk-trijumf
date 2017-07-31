@@ -17,7 +17,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   public activity: Activity = new Activity(null, null, null, null, null);
   private sub: Subscription;
   private id: number;
-  private message: string;
+  public message: string;
   public players: Player[];
   public checked: boolean[];
 
@@ -46,7 +46,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.ngOnDestroy();
     this.sub = this.service.fetchActivity(this.id).subscribe(
       (activity: Activity) => {
-        console.log(activity);
+        // console.log(activity);
         this.activity = activity;
         this.service.fetchPlayerActivity(this.id).subscribe(
           (playersActivity: any[]) => {
@@ -71,7 +71,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   onStart() {
     this.service.fetchAndCreatePlayerActivity(this.id).subscribe(
       (players: Player[]) => {
-        console.warn(players);
+        // console.warn(players);
         this.players = players;
         this.checked = new Array<boolean>(this.players.length);
       }
@@ -81,7 +81,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   onRestart() {
     this.service.restartPlayerActivity(this.id).subscribe(
       (players: Player[]) => {
-        console.warn(players);
+        // console.warn(players);
         this.players = players;
         this.checked = new Array<boolean>(this.players.length);
       }

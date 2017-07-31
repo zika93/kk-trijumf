@@ -21,11 +21,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Login');
+    // console.log('Login');
     const email = this.form.value.email;
     const password = this.form.value.password;
     const e = Md5.hashStr(password + email);
-    console.log(e);
+    // console.log(e);
     this.auth.tryLogIn(email, e.toString()).subscribe(
       (data) => {
        this.auth.onLoginCoach(data, () => this.router.navigate(['']));

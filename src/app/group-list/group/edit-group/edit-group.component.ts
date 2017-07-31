@@ -37,7 +37,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    console.log('initForm:');
+   // console.log('initForm:');
     const actArray: any[] = [];
     const coachArray: any[] = [];
     this.editForm = new FormGroup({
@@ -55,13 +55,13 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       this.players = data;
     });
     this.subCoaches = this.serviceC.getCoaches().subscribe((data: any[]) => {
-      console.log(data);
+      // console.log(data);
       this.coaches = data;
     });
   }
 
   ngOnInit() {
-    console.log('ngOnInit:');
+    // console.log('ngOnInit:');
     this.initForm();
     this.route.params.subscribe(
       (param: Params) => {
@@ -82,8 +82,8 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.sub = this.service.fetchGroup(this.id).subscribe(
       (group: Group) => {
-        console.log('onRefresh:');
-        console.log(group);
+        // console.log('onRefresh:');
+        // console.log(group);
         this.editForm.reset();
         const copy = Object.assign({}, group);
         const data: any = copy;
@@ -183,14 +183,14 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.editForm);
+    // console.log(this.editForm);
     const data = this.editForm.value;
-    console.log(data.Activities);
+    // console.log(data.Activities);
     for (const activity of data.Activities) {
       activity.Date = new Date(DateHelper.parseStringToDateTime(activity.Date));
       activity.GroupId = this.id;
     }
-    console.log(data);
+    // console.log(data);
     if (this.editMode) {
       data.Id = this.id;
       this.service.updateGroup(data).subscribe(res => {
@@ -225,5 +225,11 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   isCoachSelected(id: number) {
     const coaches = this.getControls('Coaching');
     return coaches.findIndex(z => z.value.Id === id) !== -1;
+  }
+
+  onDelete() {
+    if (confirm('Are you sure?')) {
+      this.service.deleteGroup(this.id).subscribe( (data) =>  this.router.navigate(['/', 'groups']));
+    }
   }
 }

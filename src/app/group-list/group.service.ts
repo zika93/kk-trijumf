@@ -38,7 +38,7 @@ export class GroupService {
   // }
 
   fetchAllGroups() {
-    console.log('fetching!');
+    // console.log('fetching!');
     return this.http.get(Values.url + '/group/getall').map(
       (response: Response) => {
         // this.groups = response.json();
@@ -100,6 +100,11 @@ export class GroupService {
 
   createGroup(group: Group) {
     return this.http.post(Values.url + '/group/create/', group).map(HttpHelper.extractData)
+      .catch(HttpHelper.handleErrorObservable);
+  }
+
+  deleteGroup(id: number) {
+    return this.http.post(Values.url + '/group/delete/', id).map(HttpHelper.extractData)
       .catch(HttpHelper.handleErrorObservable);
   }
 }

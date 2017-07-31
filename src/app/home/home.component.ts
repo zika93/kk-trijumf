@@ -22,13 +22,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subGroups = this.service.getGroups(+Cookie.get('id')).subscribe(
       (groups: Group[]) => {
-        console.log(groups);
+        // console.log(groups);
         this.groups = groups;
       }
     );
     this.subUpcoming = this.service.getUpcoming(+Cookie.get('id')).subscribe(
       (upcoiming: Activity[]) => {
-        console.log(upcoiming);
+        // console.log(upcoiming);
         this.upcoming = upcoiming;
       }
     );

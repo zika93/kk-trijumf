@@ -1,5 +1,7 @@
 <ul class="list-group">
-  <li appCursorPointer [routerLink]="['/','players',pl.Id]" class="list-group-item" appHover="list-group-item-info"
+  <li appCursorPointer [routerLink]="['/','players',pl.Id]"
+      [ngClass]="checkPlayerFees(i) ? 'list-group-item list-group-item-danger' : 'list-group-item'"
+      appHover="list-group-item-info"
       *ngFor="let pl of players; let i = index">
 
 
@@ -12,9 +14,9 @@
     <span *ngIf="checkPlayerMedical(i)" class="pull-right glyphicon" style="margin-left: 8px">
           <img src="../../assets/img/hospital.png">
         </span>
-    <span *ngIf="checkPlayerFees(i)" class="pull-right glyphicon">
-          <img src="../../assets/img/money.png">
-        </span>
+    <!--<span *ngIf="checkPlayerFees(i)" class="pull-right glyphicon">-->
+          <!--<img src="../../assets/img/money.png">-->
+        <!--</span>-->
 
   </li>
 </ul>

@@ -21,7 +21,7 @@ export class CoachService implements OnInit {
     this.fetchActivityTypes().subscribe(
       (data: any) => {
         Object.keys(data).forEach(key => this.activityTypes.push({Id: key, Value: data[key]}));
-        console.warn(this.activityTypes);
+        // console.warn(this.activityTypes);
       }
     );
   }
@@ -40,7 +40,7 @@ export class CoachService implements OnInit {
     return this.http.get(Values.url + '/activitytype/getall/').map(
       (response: Response) => {
         this.activityTypes = response.json();
-        console.warn(this.activityTypes);
+        // console.warn(this.activityTypes);
         return this.activityTypes;
       }
     ).catch(HttpHelper.handleErrorObservable);
@@ -50,7 +50,7 @@ export class CoachService implements OnInit {
   getUpcoming(id: number) {
     return this.http.get(Values.url + '/activity/getupcomingforcoach/' + id).map(
       (response: Response) => {
-        console.log(response.json());
+        // console.log(response.json());
         return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);
@@ -59,7 +59,7 @@ export class CoachService implements OnInit {
   getGroups(id: number) {
     return this.http.get(Values.url + '/group/getgroupsforcoach/' + id).map(
       (response: Response) => {
-        console.log(response.json());
+        // console.log(response.json());
         return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);
@@ -68,8 +68,8 @@ export class CoachService implements OnInit {
   getCoaches() {
     return this.http.get(Values.url + '/coach/getall/').map(
       (response: Response) => {
-        console.log('getCoaches:');
-        console.log(response.json());
+        // console.log('getCoaches:');
+        // console.log(response.json());
         return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);

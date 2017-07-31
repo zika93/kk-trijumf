@@ -54,7 +54,7 @@ export class ActivityService {
   fetchPlayerActivity(id: number) {
     return this.http.get(Values.url + '/playeractivity/get/' + id).map(
       (response: Response) => {
-        console.log(response);
+        // console.log(response);
         return response.json();
       }
     ).catch(HttpHelper.handleErrorObservable);

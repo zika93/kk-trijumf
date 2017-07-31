@@ -19,9 +19,9 @@ export class UpcomingComponent implements OnInit {
   ngOnInit() {
   }
 
-  private openActivity(id) {
-    console.log(id);
-  }
+  // private openActivity(id) {
+  //   console.log(id);
+  // }
 
   noUpcoming() {
     return isNullOrUndefined(this.upcoming) || this.upcoming.length === 0;

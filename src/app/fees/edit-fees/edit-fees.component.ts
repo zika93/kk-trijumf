@@ -80,7 +80,7 @@ export class EditFeesComponent implements OnInit, OnDestroy {
     this.ngOnDestroy();
     const fee = this.feeForm.value;
     fee.Date = new Date(DateHelper.parseStringToDate(fee.Date));
-    console.log(fee);
+    // console.log(fee);
     if (!this.editMode) {
       this.sub = this.serviceFees.createFee(fee).subscribe(res =>
           this.submitClick(),
@@ -110,7 +110,7 @@ export class EditFeesComponent implements OnInit, OnDestroy {
   }
 
   getYear(num: number) {
-    return num.toString().substr(0,4);
+    return num.toString().substr(0, 4);
   }
 
   pad(num, size) {
