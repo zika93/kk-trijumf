@@ -8,7 +8,6 @@ import {Values} from '../../shared/static/values';
 import {Fee} from '../../model/fee.model';
 import {Group} from '../../model/group.model';
 import {LoadingService} from '../../shared/loading.service';
-import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-player',
@@ -24,7 +23,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     [], [], [], null, '', '', '', null, null, null, null, null, null, null, '', '', '', '');
   // new Player([], [], [], [], null, '', '', '', null, null, null, null);
   id: number;
-  imgUrl = Values.userImage;
+  imgUrl = 'assets/img/user.svg';
 
   isCollapsedGroups = false;
   isCollapsedFees = false;

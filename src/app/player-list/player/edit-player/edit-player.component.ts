@@ -7,12 +7,9 @@ import {Player} from '../../../model/player.model';
 import {Subscription} from 'rxjs/Subscription';
 import {DatePipe} from '@angular/common';
 import {DateHelper} from '../../../shared/date-helper';
-import {Values} from '../../../shared/static/values';
 import {isNullOrUndefined} from 'util';
 import {GroupService} from '../../../group-list/group.service';
-import {Group} from '../../../model/group.model';
 import {AppValidators} from '../../../shared/app-validators';
-import {Fee} from '../../../model/fee.model';
 
 @Component({
   selector: 'app-edit-player',
@@ -20,6 +17,9 @@ import {Fee} from '../../../model/fee.model';
   styleUrls: ['./edit-player.component.css']
 })
 export class PlayerEditComponent implements OnInit, OnDestroy {
+  months = [ 'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December' ];
+
   id: number;
   subPlayers: Subscription;
   subGroups: Subscription;
@@ -240,11 +240,13 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   getFeeMonth(fee: FormGroup) {
-    return Values.months[(fee.value.Month % 100) - 1];
+    const ret = this.months[(fee.value.Month % 100) - 1];
+    return ret;
   }
 
   getFeeYear(fee: FormGroup) {
-    return fee.value.Month.toString().substr(0, 4);
+    const ret = fee.value.Month.toString().substr(0, 4);
+    return ret;
   }
 
   onDelete() {
