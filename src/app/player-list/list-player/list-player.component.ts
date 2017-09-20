@@ -30,7 +30,7 @@ export class ListPlayerComponent implements OnInit {
     }
   }
 
-
+  // return true means danger
   checkPlayerFees(index: number) {
     const player: Player = this.players[index];
     if (!isNullOrUndefined(player.Fees)) {
@@ -46,7 +46,7 @@ export class ListPlayerComponent implements OnInit {
         if (date.getDate() > Values.dayToWarnForFees) {
           return !(latestFee % 100 === month);
         } else {
-          return !(latestFee % 100 === month - 1);
+          return !(latestFee % 100 >= month - 1);
         }
       } else {
         return false;
