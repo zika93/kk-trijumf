@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DateHelper} from 'app/shared/date-helper';
 import {HttpHelper} from '../../shared/http-helper';
 import {Values} from '../../shared/static/values';
+import {LOADER} from '../../shared/loading.service';
 
 @Component({
   selector: 'app-edit-fees',
@@ -74,6 +75,7 @@ export class EditFeesComponent implements OnInit, OnDestroy {
     const data: any = copy;
     data.Date = this.datepipe.transform(new Date(data.Date), 'dd/MM/yyyy');
     this.feeForm.patchValue(data);
+    LOADER.hide();
   }
 
   onSubmit() {
@@ -94,6 +96,7 @@ export class EditFeesComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.cancelClick();
+    LOADER.hide();
   }
 
   fillMonthSelector() {

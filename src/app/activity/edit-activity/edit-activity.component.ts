@@ -9,6 +9,7 @@ import {Activity} from '../../model/activity.model';
 import {AddActivityComponent} from 'app/activity/add-activity/add-activity.component';
 import {CanComponentDeactivate} from 'app/shared/can-component-deactivate';
 import {Observable} from 'rxjs/Observable';
+import {LOADER} from '../../shared/loading.service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
   }
 
   ngOnInit() {
+    LOADER.display(true);
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
@@ -37,8 +39,11 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
         if (this.editMode) {
           this.onRefresh();
         }
+        LOADER.display(false);
       }
-    );
+    ,
+      () =>
+        LOADER.display(false));
   }
 
   ngOnDestroy() {
@@ -48,15 +53,20 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
   }
 
   onRefresh() {
+    LOADER.display(true);
     this.subRefresh = this.service.fetchActivity(this.id).subscribe(
       (activity: any) => {
         // console.warn(activity);
         this.activity = activity;
         this.child.onRefresh(this.activity);
-      });
+        LOADER.display(false);
+      },
+      () =>
+        LOADER.display(false));
   }
 
   onSubmit() {
+    LOADER.display(true);
     this.activity.Date = new Date(DateHelper.parseStringToDateTime( this.activity.Date));
     this.activity.GroupId = this.id;
     // console.log( this.activity);
@@ -68,6 +78,7 @@ export class EditActivityComponent implements OnInit, OnDestroy, CanComponentDea
         HttpHelper.handleErrorObservable);
     } else {
       this.service.createActivity(this.activity).subscribe(res => {
+          LOADER.display(false);
           this.onCancel();
         },
         HttpHelper.handleErrorObservable);

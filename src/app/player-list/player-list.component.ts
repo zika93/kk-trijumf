@@ -4,7 +4,8 @@ import {Player} from '../model/player.model';
 import {Subscription} from 'rxjs/Subscription';
 import {isNullOrUndefined} from 'util';
 import {Values} from '../shared/static/values';
-import {LoadingService} from '../shared/loading.service';
+import {LOADER, LoadingService} from '../shared/loading.service';
+import {HttpHelper} from '../shared/http-helper';
 
 @Component({
   selector: 'app-player-list',
@@ -19,22 +20,26 @@ export class PlayerListComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
+    LOADER.show();
     this.ngOnDestroy();
     this.subPlayers = this.service.fetchAllPlayers().subscribe(
       (players: Player[]) => {
-        console.log(players);
+        // console.log(players);
         this.players = players;
+        LOADER.hide();
       }
     );
   }
 
   ngOnInit() {
+    LOADER.show();
     this.subPlayers = this.service.fetchAllPlayers().subscribe(
       (players: Player[]) => {
         // console.log(players);
         this.players = players;
+        LOADER.hide();
       }
-    );
+      , HttpHelper.handleErrorObservable);
   }
 
   ngOnDestroy(): void {

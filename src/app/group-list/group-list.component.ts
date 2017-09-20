@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {GroupService} from './group.service';
 import {isNullOrUndefined} from 'util';
 import {Group} from '../model/group.model';
+import {LOADER} from '../shared/loading.service';
 
 @Component({
   selector: 'app-group-list',
@@ -22,6 +23,7 @@ export class GroupListComponent implements OnInit, OnDestroy {
     this.ngOnDestroy();
     this.subGroups = this.service.fetchAllGroups().subscribe(
       (groups: Group[]) => {
+        LOADER.hide();
         // console.log(groups);
         this.groups = groups;
       }
@@ -31,6 +33,7 @@ export class GroupListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subGroups = this.service.fetchAllGroups().subscribe(
       (groups: Group[]) => {
+        LOADER.hide();
         // console.log(groups);
         this.groups = groups;
       }

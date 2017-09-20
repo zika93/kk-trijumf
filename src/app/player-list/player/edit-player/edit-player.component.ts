@@ -10,6 +10,7 @@ import {DateHelper} from '../../../shared/date-helper';
 import {isNullOrUndefined} from 'util';
 import {GroupService} from '../../../group-list/group.service';
 import {AppValidators} from '../../../shared/app-validators';
+import {LOADER} from '../../../shared/loading.service';
 
 @Component({
   selector: 'app-edit-player',
@@ -17,8 +18,8 @@ import {AppValidators} from '../../../shared/app-validators';
   styleUrls: ['./edit-player.component.css']
 })
 export class PlayerEditComponent implements OnInit, OnDestroy {
-  months = [ 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December' ];
+  months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
 
   id: number;
   subPlayers: Subscription;
@@ -73,6 +74,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // console.log(this.editForm);
+    LOADER.display(true);
     const data = this.editForm.value;
     if (!isNullOrUndefined(data.Birthday) && data.Birthday !== '') {
       data.Birthday = new Date(DateHelper.parseStringToDate(data.Birthday));
@@ -92,13 +94,21 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
       data.Id = this.id;
       this.service.updatePlayer(data).subscribe(res => {
           this.onCancel();
+          LOADER.display(false);
         },
-        error => console.log(error));
+        error => {
+          console.log(error);
+          LOADER.display(false);
+        });
     } else {
       this.service.createPlayer(data).subscribe(res => {
           this.onCancel();
+          LOADER.hide();
         },
-        error => console.log(error));
+        error => {
+          console.log(error);
+          LOADER.hide();
+        });
     }
   }
 
@@ -107,6 +117,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
+    LOADER.show();
     this.subPlayers = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
         // console.log('onRefresh:');
@@ -168,12 +179,14 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         delete data.Activities;
         this.editForm.setValue(data);
         data.Id = id;
+        LOADER.hide();
       }
     );
   }
 
   ngOnInit() {
     // console.log('ngOnInit:');
+    LOADER.show();
     this.initForm();
     this.route.params.subscribe(
       (param: Params) => {
@@ -182,6 +195,7 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
         if (this.editMode) {
           this.onRefresh();
         }
+        LOADER.hide();
       }
     );
 
@@ -251,7 +265,12 @@ export class PlayerEditComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (confirm('Are you sure?')) {
-      this.service.deletePlayer(this.id).subscribe( (data) => this.router.navigate(['/', 'players']));
+      LOADER.show();
+      this.service.deletePlayer(this.id).subscribe((data) => {
+        LOADER.hide();
+        this.router.navigate(['/', 'players']);
+      }
+      );
     }
   }
 }

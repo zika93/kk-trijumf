@@ -4,6 +4,7 @@ import {Group} from '../../model/group.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {isNullOrUndefined} from 'util';
+import {LOADER} from '../../shared/loading.service';
 
 @Component({
   selector: 'app-group',
@@ -29,6 +30,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    LOADER.show();
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
@@ -42,6 +44,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.sub = this.service.fetchGroup(this.id).subscribe(
       (group: Group) => {
         this.group = group;
+        LOADER.hide();
       }
     );
   }
