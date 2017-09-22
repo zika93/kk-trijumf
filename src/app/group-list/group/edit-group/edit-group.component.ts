@@ -10,6 +10,7 @@ import {CoachService} from '../../../coach/coach.service';
 import {HttpHelper} from '../../../shared/http-helper';
 import {PlayerService} from '../../../player-list/player.service';
 import {AppValidators} from '../../../shared/app-validators';
+import {LOADER} from '../../../shared/loading.service';
 
 @Component({
   selector: 'app-edit-group',
@@ -62,6 +63,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // console.log('ngOnInit:');
+    LOADER.show();
     this.initForm();
     this.route.params.subscribe(
       (param: Params) => {
@@ -70,6 +72,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
         if (this.editMode) {
           this.onRefresh();
         }
+        LOADER.hide();
       }
     );
   }
@@ -80,6 +83,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
+    LOADER.display(true);
     this.sub = this.service.fetchGroup(this.id).subscribe(
       (group: Group) => {
         // console.log('onRefresh:');
@@ -132,8 +136,10 @@ export class EditGroupComponent implements OnInit, OnDestroy {
           }
         }
         data.Id = id;
+        LOADER.display(false);
       }
-    );
+    , err =>
+        LOADER.display(false));
   }
 
   ngOnDestroy(): void {
@@ -184,6 +190,7 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // console.log(this.editForm);
+    LOADER.display(true);
     const data = this.editForm.value;
     // console.log(data.Activities);
     for (const activity of data.Activities) {
@@ -195,11 +202,13 @@ export class EditGroupComponent implements OnInit, OnDestroy {
       data.Id = this.id;
       this.service.updateGroup(data).subscribe(res => {
           this.onCancel();
+          LOADER.display(false);
         },
         HttpHelper.handleErrorObservable);
     } else {
       this.service.createGroup(data).subscribe(res => {
           this.onCancel();
+          LOADER.display(false);
         },
         HttpHelper.handleErrorObservable);
     }
@@ -229,7 +238,13 @@ export class EditGroupComponent implements OnInit, OnDestroy {
 
   onDelete() {
     if (confirm('Are you sure?')) {
-      this.service.deleteGroup(this.id).subscribe( (data) =>  this.router.navigate(['/', 'groups']));
+      LOADER.display(true);
+      this.service.deleteGroup(this.id).subscribe( (data) =>  {
+        LOADER.display(false);
+        this.router.navigate(['/', 'groups']);
+      },
+        res =>
+          LOADER.display(false));
     }
   }
 }

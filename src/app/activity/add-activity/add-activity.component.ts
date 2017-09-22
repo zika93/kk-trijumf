@@ -9,6 +9,7 @@ import {CoachService} from '../../coach/coach.service';
 import {isNullOrUndefined} from 'util';
 import {Activity} from '../../model/activity.model';
 import {DatePipe} from '@angular/common';
+import {LOADER} from '../../shared/loading.service';
 
 @Component({
   selector: 'app-add-activity',
@@ -36,6 +37,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    LOADER.show();
     this.activityForm = new FormGroup({
       'Name': new FormControl('', Validators.required),
       'Date': new FormControl(null, [Validators.required, AppValidators.dateTimeValidator]),
@@ -46,6 +48,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
 
     this.subCoach = this.coachService.getActivityTypes().subscribe((data: any[]) => {
       this.activityTypes = data;
+      LOADER.hide();
     });
     if (!isNullOrUndefined(this.activity)) {
       this.onRefresh();
@@ -53,6 +56,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
   onRefresh(activity?: Activity) {
+    LOADER.show();
     if (!isNullOrUndefined(activity)) {
       this.activity = activity;
     }
@@ -61,6 +65,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
     // data.Date = new Date(data.Date);
     data.Date = this.datepipe.transform(new Date(data.Date), 'dd/MM/yyyy HH:mm');
     this.activityForm.patchValue(data);
+    LOADER.hide();
   }
 
   ngOnDestroy() {
@@ -73,6 +78,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    LOADER.show();
     const activity = this.activityForm.value;
     activity.Date = new Date(DateHelper.parseStringToDateTime(activity.Date));
     // console.log(activity);
@@ -84,6 +90,7 @@ export class AddActivityComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.cancelClick();
+    LOADER.hide();
   }
 
   setCurrentDate() {

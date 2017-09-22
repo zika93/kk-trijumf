@@ -7,7 +7,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {Values} from '../../shared/static/values';
 import {Fee} from '../../model/fee.model';
 import {Group} from '../../model/group.model';
-import {LoadingService} from '../../shared/loading.service';
+import {LOADER, LoadingService} from '../../shared/loading.service';
+import {HttpHelper} from '../../shared/http-helper';
 
 @Component({
   selector: 'app-player',
@@ -51,23 +52,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.loader.loading.next(LoadingService.START_LOADING);
+    LOADER.show();
     this.route.params.subscribe(
       (param: Params) => {
         this.id = +param['id'];
-        this.sub = this.service.fetchPlayer(this.id).subscribe(
-          (player: Player) => {
-            // console.log(player);
-            player.Birthday = new Date(player.Birthday);
-            this.player = player;
-            if (this.player.Picture !== null) {
-              this.imgUrl = this.player.Picture;
-            }
-            // this.loader.loading.next(false);
-          }
-        );
+        this.onRefresh();
       }
-    );
+      , HttpHelper.handleErrorObservable);
   }
 
   ngOnDestroy(): void {
@@ -81,7 +72,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   onRefresh() {
-    // this.loader.loading.next(LoadingService.START_LOADING);
+    LOADER.display(LoadingService.START_LOADING);
     this.sub = this.service.fetchPlayer(this.id).subscribe(
       (player: Player) => {
         // console.log(player);
@@ -90,9 +81,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         if (this.player.Picture !== null) {
           this.imgUrl = this.player.Picture;
         }
-        // this.loader.loading.next(LoadingService.STOP_LOADING);
-      }
-    );
+        LOADER.display(LoadingService.STOP_LOADING);
+      });
   }
 
   submitFee() {
@@ -109,12 +99,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   refreshFee() {
     // console.log('refresh feeee');
+    LOADER.show();
     this.service.fetchPlayerFees(this.id).subscribe(
       (param: Params) => {
         this.player.Fees = <Fee[]>param;
         this.cancelAddFee();
-      }
-    );
+        LOADER.hide();
+      });
   }
 
   refreshGroups() {
