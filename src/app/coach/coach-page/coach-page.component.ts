@@ -3,6 +3,7 @@ import {CoachService} from '../coach.service';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Coach} from '../../model/coach.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LOADER} from '../../shared/loading.service';
 
 @Component({
   selector: 'app-coach-page',
@@ -19,7 +20,10 @@ export class CoachPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getCoach(Cookie.get('id')).subscribe((data) => this.coach = data);
+    this.service.getCoach(Cookie.get('id')).subscribe((data) => {
+      this.coach = data;
+      LOADER.hide();
+    });
   }
 
   onEdit() {

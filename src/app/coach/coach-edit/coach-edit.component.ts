@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CoachService} from '../coach.service';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
@@ -7,6 +7,8 @@ import {isNullOrUndefined} from 'util';
 import {DatePipe} from '@angular/common';
 import {Router, ActivatedRoute} from '@angular/router';
 import {DateHelper} from '../../shared/date-helper';
+import {LOADER} from '../../shared/loading.service';
+import {HttpHelper} from '../../shared/http-helper';
 
 @Component({
   selector: 'app-coach-edit',
@@ -16,12 +18,15 @@ import {DateHelper} from '../../shared/date-helper';
 export class CoachEditComponent implements OnInit {
   editForm: FormGroup;
   passwordForm: FormGroup;
+
   constructor(private service: CoachService,
               private datepipe: DatePipe,
               private router: Router,
-              private route: ActivatedRoute ) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    LOADER.show();
     this.editForm = new FormGroup({
       'Name': new FormControl('', Validators.required),
       'Surname': new FormControl('', Validators.required),
@@ -34,12 +39,13 @@ export class CoachEditComponent implements OnInit {
       'Old': new FormControl('', Validators.required),
       'New': new FormControl('', Validators.required),
       'Repeat': new FormControl('', Validators.required)
-    })
+    });
     this.service.getCoach(Cookie.get('id')).subscribe((data: any) => {
         if (!isNullOrUndefined(data.Birthday) && data.Birthday !== '') {
           data.Birthday = this.datepipe.transform(data.Birthday, 'dd/MM/yyyy');
         }
         this.editForm.patchValue(data);
+        LOADER.hide();
       }
     );
   }
@@ -52,10 +58,11 @@ export class CoachEditComponent implements OnInit {
     this.service.updateCoach(data).subscribe(res => {
         this.onCancel();
       },
-      error => console.log(error));
+      error => HttpHelper.handleErrorObservable);
   }
 
   onCancel() {
+    LOADER.hide();
     this.router.navigate(['..'], {relativeTo: this.route});
   }
 
@@ -65,7 +72,10 @@ export class CoachEditComponent implements OnInit {
     this.service.updatePasswordCoach(data, this.passwordForm.value.New).subscribe(res => {
         this.onCancel();
       },
-      error => console.log(error));
+      error => {
+        console.log(error);
+        LOADER.hide();
+      });
   }
 
   matchPassword() {
